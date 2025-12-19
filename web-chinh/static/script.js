@@ -150,18 +150,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displayCards(page) {
-        const startIndex = (page - 1) * ITEMS_PER_PAGE;
-        const endIndex = startIndex + ITEMS_PER_PAGE;
-        let hasVisible = false;
-        allCards.forEach(card => card.style.display = 'none');
-        filteredCards.forEach((card, index) => {
-            if (index >= startIndex && index < endIndex) {
-                card.style.display = 'flex';
-                hasVisible = true;
+    const startIndex = (page - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    let hasVisible = false;
+
+    allCards.forEach(card => card.style.display = 'none');
+
+    filteredCards.forEach((card, index) => {
+        if (index >= startIndex && index < endIndex) {
+            // --- LOGIC BẢO MẬT ẢNH ---
+            const imgElement = card.querySelector('.material-image');
+            // Lấy link gốc từ dataset (ví dụ data-img)
+            const originalUrl = card.dataset.img; 
+
+            if (imgElement && originalUrl) {
+                // Chuyển đổi sang link proxy thông qua Backend Flask
+                // Sử dụng encodeURIComponent để tránh lỗi ký tự đặc biệt trong URL
+                const secureUrl = `/img_proxy?url=${encodeURIComponent(originalUrl)}`;
+                
+                // Chỉ gán nếu src khác để tránh load lại ảnh không cần thiết
+                if (imgElement.src !== window.location.origin + secureUrl) {
+                    imgElement.src = secureUrl;
+                }
             }
-        });
-        if (emptyMessage) emptyMessage.style.display = hasVisible ? 'none' : 'flex';
-    }
+            // --------------------------
+
+            card.style.display = 'flex';
+            hasVisible = true;
+        }
+    });
+
+    if (emptyMessage) emptyMessage.style.display = hasVisible ? 'none' : 'flex';
+}
 
     // =======================================================
     // IV. CÁC KHỐI SỰ KIỆN
@@ -353,26 +373,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const detailDownloadBtn = document.getElementById('detail-download-btn');
 
     function openImageDetail(card) {
-        if (!isLoggedIn) return; // Chỉ cho phép xem khi đã đăng nhập
+    if (!isLoggedIn) return; // Chỉ cho phép xem khi đã đăng nhập
 
-        const img = card.dataset.img || card.querySelector('.material-image').src;
-        const title = card.dataset.title || card.querySelector('.material-title').textContent;
-        const category = card.dataset.cat || '';
-        const description = card.dataset.desc || 'Không có mô tả chi tiết.';
-        const downloadUrl = card.dataset.download || '#';
+    // Ưu tiên lấy link từ dataset để đảm bảo là link gốc chưa bị xử lý
+    const originalImgUrl = card.dataset.img || card.querySelector('.material-image').src;
+    const title = card.dataset.title || card.querySelector('.material-title').textContent;
+    const category = card.dataset.cat || '';
+    const description = card.dataset.desc || 'Không có mô tả chi tiết.';
+    const downloadUrl = card.dataset.download || '#';
 
-        detailImage.src = img;
-        detailTitle.textContent = title;
-        detailCategory.textContent = category;
-        detailDescription.textContent = description;
+    // Chuyển đổi link ảnh sang dạng Proxy bảo mật
+    const secureImgUrl = `/img_proxy?url=${encodeURIComponent(originalImgUrl)}`;
 
-        detailDownloadBtn.onclick = () => {
-            if (downloadUrl !== '#') {
-                window.open(downloadUrl, '_blank');
-            } else {
-                alert('Chức năng tải xuống đang được cập nhật!');
-            }
-        };
+    // Gán các giá trị vào Modal chi tiết
+    detailImage.src = secureImgUrl; // Hiển thị ảnh qua proxy
+    detailTitle.textContent = title;
+    detailCategory.textContent = category;
+    detailDescription.textContent = description;
+
+    detailDownloadBtn.onclick = () => {
+        if (downloadUrl !== '#') {
+            // Đối với nút tải xuống, bạn cũng nên hướng qua một route proxy nếu muốn giấu link tải
+            window.open(downloadUrl, '_blank');
+        } else {
+            alert('Chức năng tải xuống đang được cập nhật!');
+        }
+    };
+
+    openModal('image-detail-modal');
+}
 
         openModal('image-detail-modal');
     }
@@ -398,4 +427,5 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapLetters('empty-message');
     filterCards();
 });
+
 
