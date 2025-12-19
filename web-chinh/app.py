@@ -114,7 +114,6 @@ def img_proxy():
 @app.route("/api/resources")
 @login_required_api
 def resources():
-    # Ví dụ backend trả dữ liệu (HTML không cần nhúng dữ liệu)
     return jsonify([
         {
             "title": "Nhân Vật",
@@ -122,6 +121,3 @@ def resources():
             "vip": True
         }
     ])
-
-# ❌ KHÔNG app.run()
-# Render / Gunicorn sẽ tự chạy
