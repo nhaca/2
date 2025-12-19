@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vật Liệu Hoạt Hình Gấu</title>
+    <link rel="icon" type="image/x-icon" href="https://uploads.onecompiler.io/43japmv3b/447cmv6tu/icon.png">
+    <meta name="description" content="Kho tài nguyên đồ họa, nhân vật 3D, bối cảnh, đạo cụ chất lượng cao. Cập nhật mới hằng ngày.">
+    <meta name="keywords" content="tài nguyên, model 3D, nhân vật, bối cảnh, đạo cụ, tải xuống">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="simple">
+<div id="root" class="min-h-screen flex flex-col bg-white dark:bg-gray-900">
+    <header class="bg-white dark:bg-gray-900 sticky top-0 z-50 border-b border-gray-100 dark:border-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.04)]">
+        <div class="w-full px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3 cursor-pointer">
+                    <img src="https://uploads.onecompiler.io/43japmv3b/447cmv6tu/Untitled-1.png" alt="Logo" class="w-[200px] h-[62px] object-contain">
+                </div>
+                <div class="flex-1 flex justify-center px-6">
+                    <div class="relative w-full max-w-[520px]">
+                        <label>
+                            <input type="text" placeholder="Tìm kiếm tài liệu, bản quyền, nhãn..." class="border border-gray-300 dark:border-gray-700 rounded-full px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500">
+                        </label>
+                        <div class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 cursor-pointer hover:text-blue-500">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="https://vatlieugau.site" class="text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600">
+                        Trang chủ
+                    </a>
+                    <button class="text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600">Thành viên</button>
+                    <div class="relative dropdown">
+                        <button class="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600">
+                            <span>Công cụ</span><i class="fas fa-chevron-down w-4 h-4 transition-transform"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item" data-tool-id="veo3">AI veo3</a>
+                            <a href="#" class="dropdown-item" data-tool-id="nano-pro">Nano Banana Pro</a>
+                        </div>
+                    </div>
+                    <div class="relative dropdown">
+                        <button id="user-menu-btn" class="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600">
+                            <i class="fas fa-user w-4 h-4"></i><span>Tài khoản</span><i class="fas fa-chevron-down w-4 h-4 transition-transform"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item" id="open-login-modal-btn">Đăng nhập</a>
+                            <a href="#" class="dropdown-item" id="open-bind-accounts-modal-btn">Liên kết tài khoản</a>
+                            <a href="#" class="dropdown-item hidden" id="logout-link">Đăng xuất</a>
+                        </div>
+                    </div>
+                    <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-gray-300 dark:border-gray-600" aria-label="Chuyển sang chế độ sáng">
+                        <i class="fas fa-sun w-5 h-5 text-yellow-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="w-full animate-in slide-in-from-top-2 duration-500" id="announcement-banner">
+        <div class="shadow-md transition-all duration-500 ease-in-out text-white" style="background-color: var(--color-danger);">
+            <div class="w-full px-6 py-3">
+                <div class="flex items-center justify-between gap-4">
+                    <div class="flex-shrink-0 animate-pulse">
+                        <i class="fas fa-exclamation-circle w-5 h-5"></i>
+                    </div>
+                    <div class="flex-1 min-w-0 overflow-hidden relative h-6 flex items-center">
+                        <div class="whitespace-nowrap animate-marquee absolute w-full" style="animation-duration: 24s;">
+                            <span class="font-medium md:text-base text-sm inline-block px-4">【Thông báo quan trọng】Web đang tiếp tục update, nếu xảy ra lỗi , vui lòng thử lại sau!</span>
+                            <span class="font-medium md:text-base text-sm inline-block px-4">【Thông báo quan trọng】① Chúng tôi sẽ cập nhật nguyên liệu theo đợt; ② Việc dùng chung tài khoản sẽ bị cấm từ sớm, vui lòng không đăng nhập từ các thành phố khác nhau trong cùng một ngày!</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 flex-shrink-0 z-10">
+                        <button class="p-1 hover:bg-white/20 rounded-full transition-colors" aria-label="Đóng thông báo" id="close-banner-btn">
+                            <i class="fas fa-times w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900">
+        <div class="w-full px-6">
+            <div class="relative group category-nav-wrapper">
+                <button class="nav-scroll-btn left-0" aria-label="Scroll left"><i class="fas fa-chevron-left"></i></button>
+                <div class="flex items-center gap-3 overflow-x-auto py-4 hide-scrollbar" id="category-tabs">
+                    <button class="category-tab active" data-cat="nhanvat">Nhân vật</button>
+                    <button class="category-tab" data-cat="canh">Cảnh</button>
+                    <button class="category-tab" data-cat="daocu">Đạo cụ</button>
+                    <button class="category-tab" data-cat="hieuungdacbiet">Hiệu ứng đặc biệt</button>
+                    <button class="category-tab" data-cat="bieucam">Biểu cảm</button>
+                    <button class="category-tab" data-cat="caocap">Cao cấp</button>
+                    <button class="category-tab" data-cat="video">Video</button>
+                    <button class="category-tab" data-cat="phanmem">Phần mềm</button>
+                    <button class="category-tab" data-cat="amthanh">Âm thanh</button>
+                    <button class="category-tab" data-cat="huongdan">Hướng dẫn</button>
+                    <button class="category-tab" data-cat="sinhvat">Sinh vật</button>
+                </div>
+                <button class="nav-scroll-btn right-0" aria-label="Scroll right"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="flex items-center gap-3 overflow-x-auto py-4 hide-scrollbar" id="subcategory-tabs">
+                <button class="subcategory-tab active" data-subcat="tutien">Tu tiên</button>
+                <button class="subcategory-tab active" data-subcat="tatca">Tất Cả</button>
+                <button class="subcategory-tab" data-subcat="kinhdi">Kinh Dị</button>
+                <button class="subcategory-tab" data-subcat="hiendai">Hiện Đại</button>
+                <button class="subcategory-tab" data-subcat="codai">Cổ đại</button>
+                <button class="subcategory-tab" data-subcat="khac">Khác</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-1 w-full px-6 py-8">
+        <main class="max-w-[1920px] mx-auto">
+
+            <div id="embed-wrapper" style="display: none; width: 100%; height: 100vh;">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4" id="embed-title">Công cụ</h2>
+                <button id="close-embed-btn" class="mb-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors">
+                    <i class="fas fa-times mr-2"></i> Đóng Công Cụ
+                </button>
+
+                <div id="loading-spinner-overlay" class="loading-overlay">
+                    <div class="spinner-content">
+                        <div class="spinner-icon"></div>
+                        <p class="mt-4 text-lg font-medium">Đang mở AI...</p>
+                    </div>
+                </div>
+                <iframe
+                        id="tool-iframe"
+                        src=""
+                        title="Công cụ AI"
+                        allowfullscreen
+                        style="width: 100%; height: 80%; border: 1px solid #e5e7eb; border-radius: 8px;">
+                </iframe>
+            </div>
+
+            <div id="resource-content">
+
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-xl font-bold text-gray-800 dark:text-gray-100">Tài nguyên mới nhất ( •̀ ω •́ )✧</h1>
+                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                        <span>Sắp xếp theo:</span>
+                        <label>
+                            <select class="border border-gray-300 dark:border-gray-700 rounded-lg px-2 py-1 bg-white dark:bg-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                <option>Mới nhất</option>
+                                <option>Phổ biến</option>
+                                <option>Tải xuống nhiều nhất</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="empty-message" class="empty-message">
+                    Tài nguyên đang cập nhật
+                </div>
+
+                <div class="resources-grid">
+                    <div class="material-card" data-cat="phanmem" data-subcat="">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Miễn Phí</span>
+                            <img src="https://uploads.onecompiler.io/43japmv3b/447cmv6tu/adobe-animate-logo.png" alt="Adobe Animate" class="material-image">
+                        </div>
+                        <p class="material-title">Adobe Animate</p>
+                        <p class="material-subtitle">.fla</p>
+                        <a href="https://drive.usercontent.google.com/download?id=1kWeRSJK8eOo_Vx9mKXNUJdcqPYcGQQe8&export=download&authuser=0" class="download-btn" download>
+                            <button class="material-button">Tải xuống</button>
+                        </a>
+                    </div>
+
+                    <div class="material-card" data-cat="nhanvat sinhvat" data-subcat="tatca tutien khac">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/j90ZdyLY/1723212151.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien khac">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/931xwxyY/1722607315.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien khac">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/GQPbPSJs/1765773235.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien khac">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/BVHhjDff/1722607389.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/vRjqLfM/1765773249.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/WWBgv9TR/1722000067.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/d45vJKtV/1722607369.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/sv2NHzvz/1765773269.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/FqJFZZm4/3af160a4f58f437a9b0194ee849000ec.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/jv0JFwmW/3bb1d122a3934b5c87415d2d8806a97f.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/wFJWrZwN/3c37c60942a749a08d9d8a1145391c05.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/3mGcp45L/04d31c9ce11449aaaec2e979596050ac.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/jkJg0jCT/4b4a0994d5014ae59d1b34eb818bd55b.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/Mx8FfFNN/4b53b467cf8648e69730b343925ab5ec.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/B5ptx6nC/5a694ddcae864d7a81ca00e4d28a3a6a.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/VYM1DSxt/5bca866187dc47efb91b412c2008c79e.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/CpvgKL6D/5f0a58a8fbd94647b5689027cd1bf819.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/twyY0gFF/6fa70ba3e6014646b9e4e82eac7f16a5.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca tutien">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/bjtQDZ8p/7c7cc2d0b7cf4bb786ec1ccf22bfb800.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/TyzDnJD/7dcb9bc35671474eb42e7e36a7e33a23.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/gbmxhx49/62bd9920ca804d24902ec41b7116f70a.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/ycyZBfXz/93d48974337649e398ee3cb11ffae8a0.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/WNXndzB7/463e36336e8d4f328b8c3a62ef106700.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/9mGq1QM5/651e5398bb8a4395a531c8a54fce01b3.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/6cTcFQ7k/864d0a2ea36540829340a62a70304e3e.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/h1T8953w/935d93fc0a954abcb406aec0178f4077.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/r2v5fW3w/2729d874dd334c948ec961d91853b66b.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/zhpQ08NX/6086abdd645d4c26a118b6b6cc57f3d1.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/cc7PGHnw/6766d1a2cd9845d7a70a0fb3a1ac6cfc.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/KzLhTqbR/7903f2d93d6d49199af4c23d83496d41.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/FkCTGD0q/9482a0dc985a4180a38e35ec200666ad.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/qL1c3tQ6/9699f252bb27478fa8465c0d4c140858.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/9HMbVjsJ/49026b90b0334591a65cee21d4481159.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/Sw6Rwvvv/3055638360b2474291425e956e308db2.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/ZzgMv90s/83062502686b43a5a956130bf7b9f9e0.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/WvPk6F2n/a8d6ec6a50c843feb34282346ad7f061.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/rK1gbrqK/a4787dcd12484d4d807e84f4bab14588.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/j9BqQ3VV/ae5a860fbeaf45eebdd0bee6f6848dc4.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/bMZ33snD/b5a1f83d31a94e978f292399569fb652.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/SXBrzd3F/b454f5821269497d9135bc74f71618bb.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/0RzxVLTR/b5844411808a4f6d82e3373b6d2f7717.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/n8m3Wb28/b4461617189345eb8b837d3614bb77e5.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/BHXwxqxP/bcfd025584aa442dbe724346a993d139.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/nq8vDbHb/ca756abdd50c4b929d6429bf5503ea95.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/5WymNFzV/ceb39e51fd6e4f46a31da5b3677e3ae3.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/WpDCNcXK/d1fb140b41834df6b4d6f792c2708050.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/tpntgzHH/d3e1bb84b98a4b559d650c357fad9584.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/kVdBWsQ2/d458875b4a7241028550239d14b4493f.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/LD9J9tGH/de06ce5f544245fb90120d2480d722e5.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/HcQfVGV/e3ff6635a1024c70be58a20f748a07ed.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/rKdm9xJ0/e7444dc516014ba49ff6530743456939.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/xtgryPCL/e17031dbee0149569fbea0a2f9642607.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/Kj4VKGDF/eaa2223aad704fa7a78f041c808fec02.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/N2yG0HGR/ede5ad45ad6f4ff4b0822b69be9524ae.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/DHHKmHJv/f02bd8b07c464e248368ec4ae9363466.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/rKx8NKsd/f098f03f273a4b2f87ddd38106d4a716.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/HDxmGLcz/fb0ea352aed5461995533fafab78648a.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/TB0QpPL1/13dc9b42cadc4df8b92271c31444b40f.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/GQr8JvVb/57db5b34ca6349db9f52a5e21fa1231e.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/TDC1YRBW/dc2f3a06878a44919b05144fcbabdaba.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/Rk8pRx2C/0e449db5654f46cd93fa069ad66d16a8.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/20Bz1V0V/0eb91b4bdfc0482c950742a1b120bcb3.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/p6RY7vtW/1c9ba25d0f8f4e4aa928963bfc8f4dbb.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/nsyPrrqS/2ec9f2b40d9f467d9a65ff78dda312ef.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/ZzWzNGyw/2f9f9a29b1504e19aeeb7af6745db2ea.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/Pz4CC8Js/2fa89394f7304757b764fc77e931b5c2.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/Z1BmmWxT/3ae033db673e4fbcbc8fab750917d33d.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/cKY462bw/H-c-B-o-Nh-n.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/pjY3DdWL/h-c-th-ng-nh-n.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/PvKgLW8G/nh-n-v-t-hi-n-i-1.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/m5W1gm8m/nh-n-v-t-hi-n-i-2.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/8DKSC3tH/nh-n-v-t-hi-n-i-3.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/BVrxhN70/nh-n-v-t-hi-n-i-4.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/60NbsQrp/nh-n-v-t-hi-n-i-5.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/XrCQpR3Z/nh-n-v-t-hi-n-i-6.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/BVbd14p0/nh-n-v-t-hi-n-i-7.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/0Rf65LB8/nh-n-v-t-hi-n-i-8.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/V08b7w6K/nh-n-v-t-hi-n-i-9.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/mVvFHLJM/nh-n-v-t-linh-d.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/dwnYWXjW/ntn-b-n-ti-n-h-a.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/PztF6G8j/NTN.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/PsqQHW7H/nv-n.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/Gvs7kYN4/Th-ng-Nh-n.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/XmdsYBS/TNB.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                    <div class="material-card" data-cat="nhanvat" data-subcat="tatca">
+                        <div class="material-image-wrapper">
+                            <span class="badge-copyright">Bản quyền</span>
+                            <div class="unauthorized-overlay hidden" id="unauth-overlay-X" data-id="X">
+                                <button class="btn btn-primary" onclick="handleUnauthorizedClick(event)">
+                                    <i class="fas fa-lock mr-2"></i> Đăng nhập để xem
+                                </button>
+                            </div>
+                            <img src="https://i.ibb.co/ZzD46Nd2/V-n-M-nh-H-V-Th.png" alt="Nhân vật" class="material-image">
+                        </div>
+                        <p class="material-title">Nhân Vật</p>
+                        <p class="material-subtitle">.fla</p>
+                        <p class="material-subtitle">VIP</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+            </div>
+            </div>
+</main>
+    </div>
+
+<div id="modals-logout">
+    <div id="logout-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close-btn"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">Xác nhận đăng xuất?</h2>
+
+            <form id="logout-form">
+                <button type="submit" class="btn btn-primary w-full">Đăng xuất</button>
+                <p id="logout-message" class="form-message"></p>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+        <div id="modals-container">
+            <div id="login-modal" class="modal-overlay hidden">
+                <div class="modal-content">
+                    <button class="modal-close-btn"><i class="fas fa-times"></i></button>
+                    <h2 class="modal-title">Đăng nhập</h2>
+                    <form id="login-form" class="modal-form">
+                        <div class="form-group">
+                            <label for="username" class="sr-only">Tài khoản</label>
+                            <div class="input-icon-wrapper">
+                                <i class="fas fa-user icon"></i>
+                                <input type="text" id="username" placeholder="Tài khoản" class="input-field pl-10" required>
+                            </div>
+                            <p id="username-error" class="error-message"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="sr-only">Mật khẩu</label>
+                            <div class="input-icon-wrapper">
+                                <i class="fas fa-lock icon"></i>
+                                <input type="password" id="password" placeholder="Mật khẩu" class="input-field pl-10" required>
+                            </div>
+                            <p id="password-error" class="error-message"></p>
+                        </div>
+                        <div class="flex items-center justify-between mb-4 text-sm">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="remember-me" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mr-2">
+                                <label for="remember-me" class="text-gray-600 dark:text-gray-300">Nhớ tôi</label>
+                            </div>
+                            <a href="#" class="text-blue-600 hover:text-blue-500 transition-colors">Quên mật khẩu?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full">Đăng nhập</button>
+                        <p id="login-message" class="form-message"></p>
+                    </form>
+                </div>
+            </div>
+
+            <div id="bind-accounts-modal" class="modal-overlay hidden">
+                <div class="modal-content bind-accounts-modal-content">
+                    <button class="modal-close-btn"><i class="fas fa-times"></i></button>
+                    <h2 class="modal-title">Liên kết tài khoản bên ngoài</h2>
+                    <p class="text-center text-gray-600 dark:text-gray-400 mb-8">Liên kết các tài khoản mạng xã hội của bạn để dễ dàng xác minh khi cần.</p>
+
+                    <div class="bind-accounts-grid">
+                        <div class="bind-card" data-platform="Youtube">
+                            <div class="card-header">
+                                <img src="https://uploads.onecompiler.io/43japmv3b/447cmv6tu/4a7ffb07ad4095c2e2bc3b3903aa3918.png" alt="Youtube" class="platform-icon">
+                                <h4 class="card-title">Youtube</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="youtube-id">
+                                        <a href="http://youtube.com" target="_blank" class="hover:underline text-blue-600 dark:text-blue-400">
+                                            UID Youtube:
+                                        </a>
+                                    </label>
+                                    <input type="text" id="youtube-id" placeholder="VD: @dat-09" class="input-field" required>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Thay đổi liên kết</button>
+                                <button class="btn btn-primary btn-sm"><i class="fas fa-check mr-1"></i> Nộp</button>
+                            </div>
+                        </div>
+
+                        <div class="bind-card" data-platform="Tiktok">
+                            <div class="card-header">
+                                <img src="https://uploads.onecompiler.io/43japmv3b/447cmv6tu/tiktok-logo-tik-tok-logo-icon-png-svg.png" alt="Tiktok" class="platform-icon">
+                                <h4 class="card-title">Tiktok</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="tiktok-id">
+                                        <a href="https://tiktok.com" target="_blank" class="hover:underline text-blue-600 dark:text-blue-400">
+                                            ID Tiktok:
+                                        </a>
+                                    </label>
+                                    <input type="text" id="tiktok-id" placeholder="VD: tiktok.com/@ytb_mhm" class="input-field" required>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Thay đổi liên kết</button>
+                                <button class="btn btn-primary btn-sm"><i class="fas fa-check mr-1"></i> Nộp</button>
+                            </div>
+                        </div>
+
+                        <div class="bind-card" data-platform="Facebook">
+                            <div class="card-header">
+                                <img src="https://uploads.onecompiler.io/43japmv3b/447cmv6tu/facebook-logo-icon-isolated-on-transparant-background-free-png.png" alt="Facebook" class="platform-icon">
+                                <h4 class="card-title">Facebook</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="facebook-id">
+                                        <a href="https://facebook.com" target="_blank" class="hover:underline text-blue-600 dark:text-blue-400">
+                                            ID Facebook:
+                                        </a>
+                                    </label>
+                                    <input type="text" id="facebook-id" placeholder="VD: 12345678" class="input-field" required>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Thay đổi liên kết</button>
+                                <button class="btn btn-primary btn-sm"><i class="fas fa-check mr-1"></i> Nộp</button>
+                            </div>
+                        </div>
+
+                        <div class="register-new-platform-card">
+                            <div class="card-header flex items-center justify-between">
+                                <h4 class="card-title">Đăng ký Nền tảng khác</h4>
+                                <button class="btn btn-danger btn-sm flex items-center flex-1"><i class="fas fa-trash-alt mr-1"></i> Xóa hàng loạt</button>
+                            </div>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>Số sê-ri</th>
+                                        <th>Tên nền tảng</th>
+                                        <th>Tài khoản</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="3" class="text-center text-gray-500 py-4">Không có dữ liệu nào</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                                Lưu ý: Đối với các nền tảng khác, không cần phải liên kết với tất cả, chỉ cần chỉnh sửa và gửi đi
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<div id="pagination" class="pagination flex justify-center items-center gap-2 mt-8 py-4">
+</div>
+
+
+<script src="script.js"></script>
+</body>
+</html>
