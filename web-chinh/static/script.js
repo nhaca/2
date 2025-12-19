@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // =======================================================
-    // I. KHAI BÁO BIẾN VÀ HẰNG SỐ
+    // I. KHAI BÁO BIẾN VÀ HẰNG SỐ (GIỮ NGUYÊN)
     // =======================================================
-    const ITEMS_PER_PAGE = 20; 
+    const ITEMS_PER_PAGE = 20;
     let isLoggedIn = false;
 
     const categoryTabsAll = document.querySelectorAll('.category-tab');
@@ -18,34 +18,36 @@ document.addEventListener('DOMContentLoaded', () => {
     let filteredCards = [];
 
     // =======================================================
-    // II. HÀM CHUNG VÀ MODAL UTILITIES
+    // II. HÀM CHUNG VÀ MODAL UTILITIES (GIỮ NGUYÊN)
     // =======================================================
 
     const modals = document.querySelectorAll('.modal-overlay');
     function openModal(modalId) {
         const modal = document.getElementById(modalId);
-        if (modal) { 
-            modal.classList.remove('hidden'); 
-            modal.classList.add('visible'); 
-            document.body.style.overflow = 'hidden'; 
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('visible');
+            document.body.style.overflow = 'hidden';
         }
     }
     function closeAllModals() {
-        modals.forEach(modal => { 
-            modal.classList.remove('visible'); 
-            modal.classList.add('hidden'); 
+        modals.forEach(modal => {
+            modal.classList.remove('visible');
+            modal.classList.add('hidden');
         });
         document.body.style.overflow = '';
     }
 
-    // Cập nhật các lớp phủ bảo vệ dựa trên trạng thái đăng nhập
+    // Cập nhật lớp phủ khóa nội dung (Dành cho Logic Auth mới)
     function updateUnauthorizedOverlays() {
         const overlays = document.querySelectorAll('.unauthorized-overlay');
         overlays.forEach(overlay => {
             if (isLoggedIn) {
                 overlay.classList.remove('visible');
+                overlay.style.display = 'none';
             } else {
                 overlay.classList.add('visible');
+                overlay.style.display = 'flex';
             }
         });
     }
@@ -72,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =======================================================
-    // III. LỌC VÀ PHÂN TRANG
+    // III. LỌC VÀ PHÂN TRANG (GIỮ NGUYÊN LOGIC GỐC)
     // =======================================================
 
     function filterCards() {
@@ -162,25 +164,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =======================================================
-    // IV. CÁC KHỐI SỰ KIỆN VÀ LOGIC KHÁC
+    // IV. CÁC KHỐI SỰ KIỆN (ANTI-DEVTOOLS, THEME, MODALS, AUTH)
     // =======================================================
 
     const openLoginModalBtn = document.getElementById('open-login-modal-btn');
-    const openBindAccountsModalBtn = document.getElementById('open-bind-accounts-modal-btn');
-    const openPricingModalBtn = document.getElementById('open-pricing-modal-btn');
     const closeButtons = document.querySelectorAll('.modal-close-btn');
-    const logoutForm = document.getElementById('logout-form');
     const logoutLink = document.getElementById('logout-link');
 
     // --- Anti-DevTools ---
     (function antiDevToolsLight() {
-        function stopSite() {
-            document.body.innerHTML = `<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#0b0b0b;color:#ff4444;font-size:22px;font-weight:600;text-align:center;">⚠️ Truy cập bị hạn chế<br>Vui lòng đóng DevTools</div>`;
-        }
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', e => {
             if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase()))) {
-                e.preventDefault(); stopSite();
+                e.preventDefault();
             }
         });
     })();
@@ -193,8 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateThemeButton() {
         if (!themeToggleBtn) return;
-        themeToggleBtn.innerHTML = htmlElement.classList.contains('dark') 
-            ? '<i class="fas fa-sun w-5 h-5 text-yellow-600"></i>' 
+        themeToggleBtn.innerHTML = htmlElement.classList.contains('dark')
+            ? '<i class="fas fa-sun w-5 h-5 text-yellow-600"></i>'
             : '<i class="fas fa-moon w-5 h-5 text-indigo-600"></i>';
     }
 
@@ -210,57 +206,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Modal Listeners ---
     if (openLoginModalBtn) openLoginModalBtn.addEventListener('click', e => { e.preventDefault(); closeAllModals(); openModal('login-modal'); });
-    if (openBindAccountsModalBtn) openBindAccountsModalBtn.addEventListener('click', e => { e.preventDefault(); closeAllModals(); openModal('bind-accounts-modal'); });
-    if (openPricingModalBtn) openPricingModalBtn.addEventListener('click', e => { e.preventDefault(); closeAllModals(); openModal('pricing-modal'); });
     if (logoutLink) logoutLink.addEventListener('click', e => { e.preventDefault(); closeAllModals(); openModal('logout-modal'); });
-    
+
     closeButtons.forEach(btn => btn.addEventListener('click', closeAllModals));
     modals.forEach(modal => modal.addEventListener('click', e => { if (e.target === modal) closeAllModals(); }));
 
-    // --- Xử lý Đăng nhập ---
-    const loginForm = document.getElementById('login-form');
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const loginMessage = document.getElementById('login-message');
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
+    // --- XỬ LÝ AUTH KẾT NỐI FLASK ---
 
-            try {
-                const response = await fetch('/api/login', { 
-                    method: 'POST', 
-                    headers: {'Content-Type': 'application/json'}, 
-                    body: JSON.stringify({ username, password, rememberMe: document.getElementById('remember-me').checked }) 
-                });
-                const data = await response.json();
-                if (data.success) {
-                    isLoggedIn = true;
-                    updateUnauthorizedOverlays();
-                    loginMessage.textContent = 'Đăng nhập thành công!';
-                    setTimeout(() => { closeAllModals(); window.location.reload(); }, 800);
-                } else {
-                    loginMessage.textContent = data.message || 'Sai tài khoản hoặc mật khẩu.';
-                }
-            } catch (err) { loginMessage.textContent = 'Lỗi hệ thống.'; }
-        });
-    }
-
-    // --- Xử lý Đăng xuất ---
-    if (logoutForm) {
-        logoutForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            try {
-                const response = await fetch('/api/logout', { method: 'POST' });
-                const data = await response.json();
-                if (data.success) {
-                    isLoggedIn = false;
-                    window.location.reload();
-                }
-            } catch (err) { console.error(err); }
-        });
-    }
-
-    // --- KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP (ĐÃ LOẠI BỎ PHÂN LOẠI ADMIN) ---
+    // 1. Kiểm tra trạng thái từ API /api/me
     fetch('/api/me').then(r => r.json()).then(me => {
         isLoggedIn = me.logged_in;
         const loginLink = document.getElementById('open-login-modal-btn');
@@ -274,6 +227,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         updateUnauthorizedOverlays();
     }).catch(() => updateUnauthorizedOverlays());
+
+    // 2. Xử lý Form Login
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const loginMessage = document.getElementById('login-message');
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const rememberMe = document.getElementById('remember-me')?.checked || false;
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ username, password, rememberMe })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    loginMessage.textContent = 'Đăng nhập thành công!';
+                    setTimeout(() => { window.location.reload(); }, 800);
+                } else {
+                    loginMessage.textContent = data.message || 'Lỗi đăng nhập.';
+                }
+            } catch (err) { loginMessage.textContent = 'Lỗi server.'; }
+        });
+    }
+
+    // 3. Xử lý Đăng xuất
+    const logoutForm = document.getElementById('logout-form');
+    if (logoutForm) {
+        logoutForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await fetch('/api/logout', { method: 'POST' });
+            window.location.reload();
+        });
+    }
 
     // --- Tabs Handling ---
     categoryTabsAll.forEach(tab => {
@@ -296,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Iframe Embed Logic ---
+    // --- Iframe Embed Logic (GIỮ NGUYÊN) ---
     const resourceContent = document.getElementById('resource-content');
     const embedWrapper = document.getElementById('embed-wrapper');
     const toolIframe = document.getElementById('tool-iframe');
