@@ -1,123 +1,168 @@
-from flask import (
-    Flask, request, jsonify, session,
-    render_template, Response, abort
-)
+from flask import Flask, request, jsonify, render_template, session, redirect
 from functools import wraps
-from datetime import timedelta
-import os, json, requests, urllib.parse
+import json
+import os
 
 app = Flask(__name__)
 
-# ================== CONFIG ==================
-app.secret_key = os.environ.get(
-    "SECRET_KEY",
-    "phuc_dep_zai_secret_key_vatlieugau"
-)
-app.permanent_session_lifetime = timedelta(days=30)
+# ⚠️ Production nên dùng biến môi trường
+app.secret_key = os.environ.get("SECRET_KEY", "phuc_dep_zai_secret_key")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 USERS_FILE = os.path.join(BASE_DIR, "users.json")
 
-# Chỉ cho phép proxy từ domain này (đổi nếu cần)
-ALLOWED_IMAGE_PREFIX = (
-    "https://i.ibb.co/",
-)
 
 # ================== UTIL ==================
 def load_users():
     if not os.path.exists(USERS_FILE):
         return []
-    with open(USERS_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with open(USERS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except json.JSONDecodeError:
+        return []
 
-def login_required_api(f):
+
+def save_users(users):
+    with open(USERS_FILE, "w", encoding="utf-8") as f:
+        json.dump(users, f, ensure_ascii=False, indent=4)
+
+
+def ensure_admin():
+    users = load_users()
+    if not any(u.get("role") == "admin" for u in users):
+        users.append({
+            "username": "admin",
+            "password": "adminphucdepzai@",
+            "role": "admin"
+        })
+        save_users(users)
+
+
+ensure_admin()
+
+
+# ================== AUTH GUARD ==================
+def login_required(f):
     @wraps(f)
-    def wrapper(*args, **kwargs):
+    def decorated(*args, **kwargs):
         if not session.get("username"):
-            return jsonify(success=False, message="Unauthorized"), 401
+            return jsonify(success=False, message="Chưa đăng nhập"), 401
         return f(*args, **kwargs)
-    return wrapper
+    return decorated
+
+
+def admin_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not session.get("username"):
+            return jsonify(success=False, message="Chưa đăng nhập"), 401
+        if session.get("role") != "admin":
+            return jsonify(success=False, message="Forbidden"), 403
+        return f(*args, **kwargs)
+    return decorated
+
 
 # ================== PAGES ==================
 @app.route("/")
 def home():
+    if session.get("role") == "admin":
+        return redirect("/admin-dashboard")
+    if session.get("username"):
+        return redirect("/user-dashboard")
     return render_template("index.html")
 
-# ================== AUTH ==================
+
+@app.route("/user-dashboard")
+def user_dashboard():
+    if not session.get("username"):
+        return redirect("/")
+    if session.get("role") == "admin":
+        return redirect("/admin-dashboard")
+    return render_template("users/users.html")
+
+
+@app.route("/admin-dashboard")
+def admin_dashboard():
+    if session.get("role") != "admin":
+        return redirect("/")
+    return render_template("users/admin.html")
+
+
+# ================== AUTH API ==================
 @app.route("/api/login", methods=["POST"])
 def login():
     data = request.json or {}
     username = data.get("username", "").strip()
     password = data.get("password", "").strip()
-    remember = data.get("rememberMe", False)
 
     if not username or not password:
-        return jsonify(success=False, message="Thiếu tài khoản hoặc mật khẩu")
+        return jsonify(success=False, message="Thiếu thông tin đăng nhập")
 
-    for u in load_users():
-        if u.get("username") == username and u.get("password") == password:
-            session["username"] = username
-            session.permanent = remember
-            return jsonify(success=True, username=username)
+    users = load_users()
+    for u in users:
+        if u["username"] == username and u["password"] == password:
+            session["username"] = u["username"]
+            session["role"] = u.get("role", "user")
+            return jsonify(success=True, role=session["role"])
 
     return jsonify(success=False, message="Sai tài khoản hoặc mật khẩu")
 
-@app.route("/api/logout", methods=["POST"])
+
+@app.route("/logout")
 def logout():
     session.clear()
-    return jsonify(success=True)
+    return redirect("/")
+
 
 @app.route("/api/me")
+@login_required
 def me():
     return jsonify(
-        logged_in=bool(session.get("username")),
-        username=session.get("username")
+        logged_in=True,
+        username=session.get("username"),
+        role=session.get("role", "user")
     )
 
-# ================== IMAGE PROXY (IMPORT LINK) ==================
-@app.route("/img_proxy")
-def img_proxy():
-    # Bắt buộc đăng nhập
-    if not session.get("username"):
-        abort(403)
 
-    raw_url = request.args.get("url")
-    if not raw_url:
-        abort(400)
+# ================== ADMIN API ==================
+@app.route("/api/admin/users")
+@admin_required
+def admin_users():
+    users = [{
+        "username": u["username"],
+        "role": u.get("role", "user")
+    } for u in load_users()]
 
-    # Decode URL
-    url = urllib.parse.unquote(raw_url)
+    return jsonify(success=True, users=users)
 
-    # Chặn domain lạ
-    if not url.startswith(ALLOWED_IMAGE_PREFIX):
-        abort(403)
 
-    try:
-        r = requests.get(url, timeout=8)
-        if r.status_code != 200:
-            abort(404)
+@app.route("/api/admin/create-user", methods=["POST"])
+@admin_required
+def create_user():
+    data = request.json or {}
+    username = data.get("username", "").strip()
+    password = data.get("password", "").strip()
+    role = data.get("role", "user")
 
-        content_type = r.headers.get("Content-Type", "image/png")
+    if not username or not password:
+        return jsonify(success=False, message="Thiếu username hoặc password")
 
-        return Response(
-            r.content,
-            mimetype=content_type,
-            headers={
-                "Cache-Control": "no-store",
-                "X-Content-Type-Options": "nosniff"
-            }
-        )
-    except requests.RequestException:
-        abort(502)
+    users = load_users()
+    if any(u["username"] == username for u in users):
+        return jsonify(success=False, message="Username đã tồn tại")
 
-# ================== DEMO API (OPTIONAL) ==================
-@app.route("/api/resources")
-@login_required_api
-def resources():
-    return jsonify([
-        {
-            "title": "Nhân Vật",
-            "img": "https://i.ibb.co/j90ZdyLY/1723212151.png",
-            "vip": True
-        }
-    ])
+    users.append({
+        "username": username,
+        "password": password,
+        "role": role
+    })
+    save_users(users)
+
+    return jsonify(success=True)
+
+
+# ❌ KHÔNG app.run khi deploy Render
+# Gunicorn sẽ gọi app
+if __name__ == "__main__":
+    app.run()
