@@ -46,7 +46,7 @@ def login():
     data = request.json or {}
     username = data.get("username", "").strip()
     password = data.get("password", "").strip()
-    remember = data.get("rememberMe", False) # Nhận từ checkbox ở giao diện
+    remember = data.get("rememberMe", False)
 
     if not username or not password:
         return jsonify(success=False, message="Tài khoản và mật khẩu không được trống")
@@ -55,9 +55,8 @@ def login():
     for u in users:
         if u["username"] == username and u["password"] == password:
             session["username"] = username
-            # Logic "Nhớ tôi": Nếu True, session sẽ tồn tại 30 ngày kể cả khi đóng trình duyệt
-            session.permanent = remember 
-            return jsonify(success=True)
+            session.permanent = remember
+            return jsonify(success=True, username=username)  # 👈 THÊM
 
     return jsonify(success=False, message="Sai tài khoản hoặc mật khẩu")
 
@@ -82,3 +81,4 @@ def download(filename):
 
 if __name__ == "__main__":
     app.run()
+
