@@ -6,11 +6,11 @@ from datetime import timedelta
 
 app = Flask(__name__)
 
-# Secret key cố định để giữ phiên đăng nhập ổn định
-app.secret_key = "phuc_dep_zai_secret_key_vatlieugau"
+# Secret key để mã hóa session - Hãy giữ chuỗi này bí mật
+app.secret_key = os.environ.get("SECRET_KEY", "phuc_dep_zai_secret_key_vatlieugau")
 
-# Cấu hình thời gian lưu đăng nhập khi chọn "Nhớ tôi" (31 ngày)
-app.permanent_session_lifetime = timedelta(days=31)
+# Cấu hình thời gian sống của session khi chọn "Nhớ tôi" (30 ngày)
+app.permanent_session_lifetime = timedelta(days=30)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 USERS_FILE = os.path.join(BASE_DIR, "users.json")
@@ -31,7 +31,7 @@ def login_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         if not session.get("username"):
-            return jsonify(success=False, message="Vui lòng đăng nhập để truy cập"), 401
+            return jsonify(success=False, message="Vui lòng đăng nhập trước"), 401
         return f(*args, **kwargs)
     return decorated
 
@@ -46,20 +46,20 @@ def login():
     data = request.json or {}
     username = data.get("username", "").strip()
     password = data.get("password", "").strip()
-    remember = data.get("rememberMe", False)
+    remember = data.get("rememberMe", False) # Nhận từ checkbox ở giao diện
 
     if not username or not password:
-        return jsonify(success=False, message="Thiếu thông tin đăng nhập")
+        return jsonify(success=False, message="Tài khoản và mật khẩu không được trống")
 
     users = load_users()
     for u in users:
         if u["username"] == username and u["password"] == password:
             session["username"] = username
-            # Xử lý tính năng "Nhớ tôi"
+            # Logic "Nhớ tôi": Nếu True, session sẽ tồn tại 30 ngày kể cả khi đóng trình duyệt
             session.permanent = remember 
             return jsonify(success=True)
 
-    return jsonify(success=False, message="Tài khoản hoặc mật khẩu không chính xác")
+    return jsonify(success=False, message="Sai tài khoản hoặc mật khẩu")
 
 @app.route("/api/logout", methods=["POST"])
 def logout():
@@ -68,18 +68,17 @@ def logout():
 
 @app.route("/api/me")
 def me():
-    # API này giúp JavaScript biết trạng thái để ẩn/hiện nút và nội dung
+    # Giúp Frontend kiểm tra trạng thái đăng nhập để ẩn/hiện nút và khóa nội dung
     return jsonify(
         logged_in=bool(session.get("username")),
         username=session.get("username")
     )
 
-# Ví dụ về bảo vệ đường dẫn tải về
 @app.route("/api/download/<path:filename>")
 @login_required
 def download(filename):
-    return jsonify(success=True, file_requested=filename)
+    # Route ví dụ để bảo vệ link tải tài nguyên
+    return jsonify(success=True, file=filename)
 
-# Để chạy trên server (Gunicorn/UWSGI), chúng ta không dùng app.run() trực tiếp
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
