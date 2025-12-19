@@ -1,1 +1,380 @@
-(function(_0x2d8f05,_0x4b81bb){const _0x1c3d69=_0x56a6,_0x367f33=_0x2d8f05();while(!![]){try{const _0x53b758=-parseInt(_0x1c3d69(0x111))/0x1+parseInt(_0x1c3d69(0x13c))/0x2+-parseInt(_0x1c3d69(0x10d))/0x3+-parseInt(_0x1c3d69(0x10b))/0x4+parseInt(_0x1c3d69(0x126))/0x5*(parseInt(_0x1c3d69(0x112))/0x6)+parseInt(_0x1c3d69(0x12f))/0x7+parseInt(_0x1c3d69(0x10a))/0x8;if(_0x53b758===_0x4b81bb)break;else _0x367f33['push'](_0x367f33['shift']());}catch(_0x54668e){_0x367f33['push'](_0x367f33['shift']());}}}(_0x5242,0x8b308));function _0x56a6(_0x35639d,_0x5c4238){const _0x52427a=_0x5242();return _0x56a6=function(_0x56a635,_0x244248){_0x56a635=_0x56a635-0x101;let _0x272c21=_0x52427a[_0x56a635];return _0x272c21;},_0x56a6(_0x35639d,_0x5c4238);}document['addEventListener'](_0x56a6(0x139),()=>{const _0x1e3606=_0x56a6,_0x446002={'zXlKv':_0x1e3606(0x140),'wNqYm':_0x1e3606(0x130),'hZkJP':function(_0x4b4348,_0x1f5684){return _0x4b4348===_0x1f5684;},'UoJvB':_0x1e3606(0x11b),'oRGTl':_0x1e3606(0x11c),'gPMtN':_0x1e3606(0x147),'qLzXF':_0x1e3606(0x131),'jDYIm':function(_0x1e6a98,_0x52d67a){return _0x1e6a98<_0x52d67a;},'fWbcL':function(_0x3a4843,_0x36a7a0){return _0x3a4843+_0x36a7a0;},'CgKLm':function(_0x2b8006,_0x3e1762){return _0x2b8006*_0x3e1762;},'RnduQ':function(_0x2c00a4,_0x301dc8){return _0x2c00a4!==_0x301dc8;},'vPjQG':_0x1e3606(0x143),'lQkXv':function(_0x181878,_0x34d0b1){return _0x181878(_0x34d0b1);},'wVzHi':_0x1e3606(0x11e),'QkXyP':_0x1e3606(0x123),'sTfUr':_0x1e3606(0x119),'HnBIm':_0x1e3606(0x118),'DqZzW':function(_0x2287f3,_0x5998a6){return _0x2287f3(_0x5998a6);},'KjBxn':_0x1e3606(0x133),'aMryV':_0x1e3606(0x12c),'tXnGp':_0x1e3606(0x103),'bOaJe':_0x1e3606(0x146),'NfUaL':_0x1e3606(0x136),'pYjRc':_0x1e3606(0x137),'XmStG':function(_0x2c0e81,_0x18e8d8){return _0x2c0e81!==_0x18e8d8;},'kMqYn':_0x1e3606(0x120),'YlOAd':_0x1e3606(0x121),'rVzKe':_0x1e3606(0x102),'uaNoW':function(_0x3013d4,_0x4c278c){return _0x3013d4(_0x4c278c);}};let _0x3a921d=!0x1;const _0x51c72f=0x14,_0x3d30b6=document[_0x1e3606(0x10e)](_0x446002['zXlKv']),_0x2e8f12=document['querySelectorAll'](_0x446002['wNqYm']),_0x183a21=Array['from'](document[_0x1e3606(0x10e)](_0x1e3606(0x107))),_0x1f9f25=document['querySelector'](_0x1e3606(0x10f)),_0x4a5d82=document[_0x1e3606(0x138)](_0x1e3606(0x13f));let _0x56a655=_0x446002['UoJvB'],_0x2e7532=null,_0x2424b9=0x1,_0x40bc75=[];const _0x28972e=document['querySelectorAll'](_0x1e3606(0x113));function _0x2f913d(_0x385208){const _0x122a10=document[_0x1e3606(0x138)](_0x385208);_0x122a10&&(_0x122a10[_0x1e3606(0x11a)][_0x1e3606(0x116)](_0x446002['oRGTl']),_0x122a10[_0x1e3606(0x11a)]['add'](_0x446002['gPMtN']),document[_0x1e3606(0x117)]['style'][_0x1e3606(0x141)]=_0x446002['oRGTl']);}function _0x5c8e22(){_0x28972e[_0x1e3606(0x144)](_0x4e61e0=>{const _0x2a3e61=_0x1e3606;_0x4e61e0[_0x2a3e61(0x11a)][_0x2a3e61(0x116)](_0x446002['gPMtN']),_0x4e61e0[_0x2a3e61(0x11a)]['add'](_0x446002['oRGTl']);}),document[_0x1e3606(0x117)]['style'][_0x1e3606(0x141)]='';}function _0x4c5e31(){const _0x2d1b09=_0x1e3606,_0x2b467f=document[_0x2d1b09(0x10e)](_0x446002['qLzXF']);_0x2b467f[_0x2d1b09(0x144)](_0x5c4217=>{const _0x3b11e2=_0x2d1b09;_0x3a921d?(_0x5c4217[_0x3b11e2(0x11a)][_0x3b11e2(0x116)](_0x446002['gPMtN']),_0x5c4217[_0x3b11e2(0x115)][_0x3b11e2(0x12a)]='none'):(_0x5c4217[_0x3b11e2(0x11a)]['add'](_0x446002['gPMtN']),_0x5c4217[_0x3b11e2(0x115)][_0x3b11e2(0x12a)]='flex');});}window['handleUnauthorizedClick']=_0x2478a0=>{const _0x391f7a=_0x1e3606;_0x2478a0['preventDefault'](),_0x2478a0[_0x391f7a(0x148)](),!_0x3a921d&&(_0x5c8e22(),_0x2f913d(_0x391f7a(0x13d)));};function _0x4890d9(_0x42f0da){const _0x4a9b24=_0x1e3606,_0x507747=document[_0x4a9b24(0x138)](_0x42f0da);if(!_0x507747)return;const _0x34563a=_0x507747['textContent']['trim']();let _0x395874='';for(let _0x4da99b=0x0;_0x446002['jDYIm'](_0x4da99b,_0x34563a['length']);_0x4da99b++){const _0x411e74=_0x446002['hZkJP'](_0x34563a[_0x4da99b],' ')?'&nbsp;':_0x34563a[_0x4da99b];_0x395874+=_0x446002['fWbcL'](_0x446002['fWbcL']('<span style="animation-delay: ',_0x446002['CgKLm'](_0x4da99b,0.1)),_0x4a9b24(0x12d))+_0x411e74+'</span>';}_0x507747['innerHTML']=_0x395874;}function _0x3e1762(){const _0x34338e=_0x1e3606;_0x40bc75=_0x183a21['filter'](_0x1b79f2=>{const _0x3b4a2a=_0x56a6,_0x54668e=_0x1b79f2[_0x3b4a2a(0x149)]('data-cat'),_0x367f33=_0x1b79f2[_0x3b4a2a(0x149)]('data-subcat')||'';let _0x53b758=!0x1;return _0x2e7532&&_0x446002['RnduQ'](_0x2e7532,_0x446002['vPjQG'])?_0x367f33['includes'](_0x2e7532)&&(_0x53b758=!0x0):_0x56a655&&(_0x446002['hZkJP'](_0x56a655,_0x446002['vPjQG'])||_0x446002['hZkJP'](_0x54668e,_0x56a655))&&(_0x53b758=!0x0),_0x53b758;}),_0x2424b9=0x1,_0x446002['lQkXv'](_0x301dc8,_0x40bc75['length']),_0x446002['lQkXv'](_0x2c00a4,_0x2424b9);}function _0x2b8006(_0x34d0b1,_0x4b4348,_0x1f5684,_0x52d67a=!0x1){const _0x2f217c=_0x1e3606,_0x1e6a98=document[_0x2f217c(0x109)]('button');return _0x1e6a98[_0x2f217c(0x11d)]=_0x34d0b1,_0x1e6a98[_0x2f217c(0x11a)]['add']('px-3','py-1',_0x2f217c(0x124),_0x2f217c(0x106),_0x2f217c(0x114)),_0x1f5684?(_0x1e6a98['disabled']=!0x0,_0x1e6a98[_0x2f217c(0x11a)]['add']('bg-gray-200',_0x2f217c(0x105),_0x2f217c(0x135),_0x2f217c(0x12e),_0x2f217c(0x128))):_0x52d67a?_0x1e6a98[_0x2f217c(0x11a)]['add'](_0x446002['wVzHi'],_0x446002['QkXyP'],_0x446002['sTfUr']):(_0x1e6a98[_0x2f217c(0x11a)]['add'](_0x446002['HnBIm'],_0x2f217c(0x145),_0x2f217c(0x14b),_0x2f217c(0x108),'dark:text-gray-300',_0x2f217c(0x127)),_0x1e6a98['addEventListener'](_0x2f217c(0x125),()=>{const _0x3b1318=_0x2f217c;_0x2424b9=_0x4b4348,_0x2c00a4(_0x2424b9),_0x301dc8(_0x40bc75['length']),window['scrollTo']({'top':0x0,'behavior':_0x3b1318(0x132)});})),_0x1e6a98;}function _0x301dc8(_0x385800){const _0x241d6b=_0x1e3606;if(!_0x4a5d82)return;_0x4a5d82[_0x241d6b(0x142)]='';const _0x50f96d=Math['ceil'](_0x385800/_0x51c72f);if(_0x50f96d<=0x1){_0x4a5d82['style']['display']=_0x241d6b(0x130);return;}_0x4a5d82[_0x241d6b(0x115)]['display']='flex',_0x4a5d82[_0x241d6b(0x122)](_0x446002['DqZzW'](_0x2b8006,_0x241d6b(0x129),_0x2424b9-0x1,0x1===_0x2424b9));const _0x31cfb5=0x5;let _0x53573c=Math['max'](0x1,_0x2424b9-Math['floor'](_0x31cfb5/0x2)),_0x207869=Math['min'](_0x50f96d,_0x53573c+_0x31cfb5-0x1);_0x207869-_0x53573c+0x1<_0x31cfb5&&(_0x53573c=Math['max'](0x1,_0x207869-_0x31cfb5+0x1)),_0x53573c>0x1&&(_0x4a5d82[_0x241d6b(0x122)](_0x2b8006('1',0x1,!0x1,0x1===_0x2424b9)),_0x53573c>0x2&&_0x4a5d82['appendChild'](_0x2b8006('...',null,!0x0)));for(let _0x165315=_0x53573c;_0x165315<=_0x207869;_0x165315++)_0x4a5d82[_0x241d6b(0x122)](_0x446002['DqZzW'](_0x2b8006,_0x165315,_0x165315,!0x1,_0x165315===_0x2424b9));_0x207869<_0x50f96d&&(_0x207869<_0x50f96d-0x1&&_0x4a5d82['appendChild'](_0x2b8006('...',null,!0x0)),_0x4a5d82[_0x241d6b(0x122)](_0x2b8006(_0x50f96d,_0x50f96d,!0x1,_0x50f96d===_0x2424b9))),_0x4a5d82[_0x241d6b(0x122)](_0x2b8006('Sau',_0x2424b9+0x1,_0x2424b9===_0x50f96d));}function _0x2c00a4(_0x3a4843){const _0x296e83=_0x1e3606,_0x36a7a0=(_0x3a4843-0x1)*_0x51c72f,_0x42f0da=_0x36a7a0+_0x51c72f;let _0x4da99b=!0x1;_0x183a21['forEach'](_0x411e74=>_0x411e74[_0x296e83(0x115)][_0x296e83(0x12a)]=_0x296e83(0x130)),_0x40bc75['forEach']((_0x3e8a75,_0x23f796)=>{const _0x4ad558=_0x296e83;_0x23f796>=_0x36a7a0&&_0x23f796<_0x42f0da&&(_0x3e8a75['style'][_0x4ad558(0x12a)]='flex',_0x4da99b=!0x0);}),_0x1f9f25&&(_0x1f9f25[_0x296e83(0x115)][_0x296e83(0x12a)]=_0x4da99b?_0x296e83(0x130):'flex');}const _0x41d402=document[_0x1e3606(0x138)](_0x1e3606(0x101)),_0x1f9a03=document[_0x1e3606(0x10e)]('.modal-close-btn'),_0x286395=document[_0x1e3606(0x138)](_0x1e3606(0x134));!function(){const _0x464a78=_0x1e3606;document[_0x464a78(0x139)](_0x464a78(0x110),_0x26c06a=>_0x26c06a['preventDefault']()),document['addEventListener'](_0x464a78(0x14a),_0x27f124=>{const _0x51c360=_0x464a78;('F12'===_0x27f124['key']||_0x27f124['ctrlKey']&&_0x27f124['shiftKey']&&['i','j','c']['includes'](_0x27f124['key']['toLowerCase']()))&&_0x27f124[_0x51c360(0x104)]();});}();const _0x550d99=document[_0x1e3606(0x138)]('theme-toggle'),_0x454b5f=document['documentElement'],_0x17d23f=localStorage['getItem'](_0x1e3606(0x13a))||'dark';_0x454b5f['classList']['add'](_0x17d23f);function _0x26c06a(){const _0x3b115e=_0x1e3606;if(!_0x550d99)return;_0x550d99['innerHTML']=_0x454b5f[_0x3b115e(0x11a)]['contains'](_0x446002['KjBxn'])?_0x446002['aMryV']:_0x446002['tXnGp'];}_0x550d99&&(_0x550d99['addEventListener'](_0x1e3606(0x125),()=>{const _0x275b63=_0x1e3606;_0x454b5f[_0x275b63(0x11a)]['toggle']('dark'),_0x454b5f['classList']['toggle'](_0x275b63(0x14c)),localStorage['setItem'](_0x446002['bOaJe'],_0x454b5f[_0x275b63(0x11a)]['contains'](_0x446002['KjBxn'])?_0x446002['KjBxn']:_0x446002['NfUaL']),_0x26c06a();}),_0x26c06a());_0x41d402&&_0x41d402['addEventListener'](_0x1e3606(0x125),_0x334812=>{const _0x347c0b=_0x1e3606;_0x334812['preventDefault'](),_0x5c8e22(),_0x2f913d(_0x347c0b(0x13d));}),_0x286395&&_0x286395['addEventListener'](_0x1e3606(0x125),_0x15f7a0=>{const _0x217d7b=_0x1e3606;_0x15f7a0['preventDefault'](),_0x5c8e22(),_0x2f913d(_0x217d7b(0x10c));}),_0x1f9a03[_0x1e3606(0x144)](_0x1c37b6=>_0x1c37b6['addEventListener'](_0x1e3606(0x125),_0x5c8e22));const _0x3860b2=document[_0x1e3606(0x10e)]('.modal-overlay');_0x3860b2[_0x1e3606(0x144)](_0x47d519=>_0x47d519['addEventListener'](_0x1e3606(0x125),_0x38c037=>{_0x38c037['target']===_0x47d519&&_0x5c8e22();}));fetch(_0x446002['pYjRc'])['then'](_0x5c8033=>_0x5c8033['json']())['then'](_0x269a9b=>{const _0x56a6bc=_0x1e3606;_0x3a921d=_0x269a9b['logged_in'];const _0x1c172e=document[_0x56a6bc(0x138)](_0x56a6bc(0x101));_0x3a921d?(_0x1c172e?.['classList']['add'](_0x56a6bc(0x130)),_0x286395?.['classList']['remove'](_0x56a6bc(0x130))):(_0x1c172e?.['classList']['remove'](_0x56a6bc(0x130)),_0x286395?.['classList']['add'](_0x56a6bc(0x130))),_0x4c5e31();})['catch'](()=>_0x4c5e31());const _0x27f124=document['getElementById']('login-form');_0x27f124&&_0x27f124['addEventListener'](_0x1e3606(0x12b),async _0x213327=>{const _0x2a9e22=_0x1e3606;_0x213327['preventDefault']();const _0x1a8747=document[_0x2a9e22(0x138)]('login-message'),_0x207604=document[_0x2a9e22(0x138)]('username')['value'][_0x2a9e22(0x13e)](),_0x2d1b0d=document['getElementById'](_0x2a9e22(0x13b))['value'][_0x2a9e22(0x13e)](),_0x44c35d=document['getElementById']('remember-me')?.['checked']||!0x1;try{const _0x4d1668=await fetch('/api/login',{'method':_0x2a9e22(0x11f),'headers':{'Content-Type':_0x2a9e22(0x12f)},'body':JSON['stringify']({'username':_0x207604,'password':_0x2d1b0d,'rememberMe':_0x44c35d})}),_0x3f5c5b=await _0x4d1668['json']();_0x3f5c5b['success']?(_0x1a8747['textContent']='Đăng nhập thành công!',setTimeout(()=>{window['location']['reload']();},0x320)):_0x1a8747['textContent']=_0x3f5c5b['message']||'Lỗi đăng nhập.';}catch(_0x4d0089){_0x1a8747['textContent']='Lỗi server.';}});const _0x1c37b6=document[_0x1e3606(0x138)](_0x446002['kMqYn']);_0x1c37b6&&_0x1c37b6['addEventListener'](_0x1e3606(0x12b),async _0x4c278c=>{_0x4c278c['preventDefault'](),await fetch('/api/logout',{'method':_0x446002['YlOAd']}),window['location']['reload']();});_0x3d30b6['forEach'](_0x231d68=>{const _0x2863a3=_0x1e3606;_0x231d68['addEventListener'](_0x2863a3(0x125),()=>{const _0x17c92b=_0x2863a3;_0x3d30b6[_0x17c92b(0x144)](_0x38b46a=>_0x38b46a['classList']['remove'](_0x17c92b(0x123))),_0x231d68[_0x17c92b(0x11a)]['add'](_0x17c92b(0x123)),_0x56a655=_0x231d68['dataset']['cat'],_0x2e7532=null,_0x2e8f12[_0x17c92b(0x144)](_0x2e48e0=>_0x2e48e0[_0x17c92b(0x11a)]['remove'](_0x17c92b(0x123))),_0x3e1762();});}),_0x2e8f12['forEach'](_0x27242c=>{const _0x4896e4=_0x1e3606;_0x27242c[_0x4896e4(0x139)](_0x4896e4(0x125),()=>{const _0x3b856a=_0x4896e4;_0x2e8f12['forEach'](_0x40bc75=>_0x40bc75['classList']['remove'](_0x3b856a(0x123))),_0x27242c[_0x3b856a(0x11a)]['add'](_0x3b856a(0x123)),_0x2e7532=_0x27242c['dataset']['subcat'],_0x3e1762();});});const _0x256e29=document[_0x1e3606(0x138)](_0x446002['rVzKe']),_0x18e8d8=document['getElementById']('embed-wrapper'),_0x47d519=document[_0x1e3606(0x138)]('tool-iframe'),_0x38c037=document[_0x1e3606(0x138)]('embed-title'),_0x5c8033=document[_0x1e3606(0x138)]('loading-spinner-overlay'),_0x269a9b=document[_0x1e3606(0x138)]('close-embed-btn');function _0x385208(_0x178220){const _0x53d61b=_0x1e3606;if(!_0x47d519)return;let _0x450a8b=_0x446002['hZkJP'](_0x178220,'veo3')?'https://labs.google/fx/tools/flow':'https://ai-generator.artlist.io/image-to-image-ai/nano-banana-pro';_0x5c8033['style'][_0x53d61b(0x12a)]='flex',_0x256e29[_0x53d61b(0x115)][_0x53d61b(0x12a)]=_0x53d61b(0x130),_0x38c037[_0x53d61b(0x11d)]=_0x446002['hZkJP'](_0x178220,'veo3')?'Công cụ: AI veo3':'Công cụ: Nano Banana Pro',_0x47d519['src']=_0x450a8b,_0x18e8d8[_0x53d61b(0x115)][_0x53d61b(0x12a)]='block';}_0x269a9b&&_0x269a9b['addEventListener'](_0x1e3606(0x125),()=>{const _0x2e061a=_0x1e3606;_0x18e8d8[_0x2e061a(0x115)]['display']=_0x2e061a(0x130),_0x47d519['src']='',_0x256e29[_0x2e061a(0x115)][_0x2e061a(0x12a)]='block';}),document['querySelectorAll']('.dropdown-item[data-tool-id]')[_0x1e3606(0x144)](_0x5b34a6=>{_0x5b34a6['addEventListener']('click',_0x82f281=>{_0x82f281['preventDefault'](),_0x385208(_0x82f281['currentTarget']['getAttribute']('data-tool-id'));});}),_0x47d519&&_0x47d519['addEventListener']('load',()=>{const _0x5a181d=_0x1e3606;_0x5c8033[_0x5a181d(0x115)][_0x5a181d(0x12a)]=_0x5a181d(0x130);});const _0x4d1668=document['getElementById']('detail-image'),_0x3f5c5b=document['getElementById']('detail-title'),_0x4d0089=document[_0x1e3606(0x138)]('detail-category'),_0x213327=document[_0x1e3606(0x138)]('detail-description'),_0x1a8747=document[_0x1e3606(0x138)]('detail-download-btn');function _0x207604(_0x35607a){const _0x2964c9=_0x1e3606;if(!_0x3a921d)return;const _0x1d752c=_0x35607a['dataset']['img']||_0x35607a[_0x2964c9(0x10f)](_0x2964c9(0x111))['src'],_0x4d6325=_0x35607a['dataset']['title']||_0x35607a[_0x2964c9(0x10f)]('.material-title')[_0x2964c9(0x11d)],_0x25c345=_0x35607a['dataset']['cat']||'',_0x2e7d82=_0x35607a['dataset']['desc']||'Không có mô tả chi tiết.',_0x510065=_0x35607a['dataset']['download']||'#';_0x4d1668['src']=_0x1d752c,_0x3f5c5b['textContent']=_0x4d6325,_0x4d0089['textContent']=_0x25c345,_0x213327[_0x2964c9(0x11d)]=_0x2e7d82,_0x1a8747['onclick']=()=>{const _0x1d1e67=_0x2964c9;_0x446002['XmStG'](_0x510065,'#')?window['open'](_0x510065,'_blank'):alert('Chức năng tải xuống đang được cập nhật!');},_0x2f913d('image-detail-modal');}_0x183a21['forEach'](_0x550d30=>{const _0x1a337c=_0x1e3606;_0x550d30[_0x1a337c(0x115)]['cursor']='pointer',_0x550d30['addEventListener'](_0x1a337c(0x125),_0x2d87e0=>{const _0x3b1675=_0x1a337c;(_0x2d87e0['target']['closest']('.unauthorized-overlay')||_0x2d87e0['target']['closest']('.material-button')||_0x2d87e0['target']['closest']('.download-btn'))||_0x446002['uaNoW'](_0x207604,_0x550d30);});}),document[_0x1e3606(0x10f)]('.category-tab[data-cat="nhanvat"]')?.['classList']['add'](_0x446002['QkXyP']),_0x446002['uaNoW'](_0x4890d9,'empty-message'),_0x3e1762();});function _0x5242(){const _0x39dd60=['bg-blue-600','text-gray-500','font-medium','.resources-grid .material-card','dark:bg-gray-800','createElement','352528xIaqwD','1234404YcWvYg','logout-modal','7614WwXhJq','querySelectorAll','querySelector','contextmenu','.material-image','6FpCShI','.unauthorized-overlay','          ','style','add','body','bg-gray-100','text-white','classList','nhanvat','visible','textContent','hover:bg-blue-700','POST','logout-form','POST','appendChild','active','rounded-lg','click','1170XWdIjs','dark:hover:bg-gray-700','cursor-not-allowed','Trước','display','submit','<i class="fas fa-sun w-5 h-5 text-yellow-600"></i>','</span>','text-gray-700','application/json','hidden','wNqYm','smooth','dark','logout-link','text-gray-400','pYjRc','3436531QkSjFv','getElementById','addEventListener','theme','password','265814eUfQcT','login-modal','trim','pagination','zXlKv','overflow','innerHTML','text-indigo-600','forEach','dark:bg-gray-700','hover:bg-gray-200','oRGTl','preventDefault','getAttribute','keydown','hover:text-white','light','open-login-modal-btn','.category-tab','resource-content','<i class="fas fa-moon w-5 h-5 text-indigo-600"></i>','preventDefault','text-gray-300'];_0x5242=function(){return _0x39dd60;};return _0x5242();}
+document.addEventListener('DOMContentLoaded', () => {
+
+    // =======================================================
+    // I. KHAI BÁO BIẾN VÀ HẰNG SỐ
+    // =======================================================
+    const ITEMS_PER_PAGE = 20;
+    let isLoggedIn = false;
+
+    const categoryTabsAll = document.querySelectorAll('.category-tab');
+    const subcategoryTabsAll = document.querySelectorAll('.subcategory-tab');
+    const allCards = Array.from(document.querySelectorAll('.resources-grid .material-card'));
+    const emptyMessage = document.querySelector('#empty-message');
+    const paginationContainer = document.getElementById('pagination');
+
+    let currentCat = 'nhanvat';
+    let currentSubcat = null;
+    let currentPage = 1;
+    let filteredCards = [];
+
+    // =======================================================
+    // II. HÀM CHUNG VÀ MODAL UTILITIES
+    // =======================================================
+
+    const modals = document.querySelectorAll('.modal-overlay');
+    function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('visible');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+    function closeAllModals() {
+        modals.forEach(modal => {
+            modal.classList.remove('visible');
+            modal.classList.add('hidden');
+        });
+        document.body.style.overflow = '';
+    }
+
+    // Cập nhật lớp phủ khóa nội dung
+    function updateUnauthorizedOverlays() {
+        const overlays = document.querySelectorAll('.unauthorized-overlay');
+        overlays.forEach(overlay => {
+            if (isLoggedIn) {
+                overlay.classList.remove('visible');
+                overlay.style.display = 'none';
+            } else {
+                overlay.classList.add('visible');
+                overlay.style.display = 'flex';
+            }
+        });
+    }
+
+    window.handleUnauthorizedClick = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!isLoggedIn) {
+            closeAllModals();
+            openModal('login-modal');
+        }
+    };
+
+    function wrapLetters(elementId) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        const text = element.textContent.trim();
+        let wrappedHtml = '';
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i] === ' ' ? '&nbsp;' : text[i];
+            wrappedHtml += `<span style="animation-delay: ${i * 0.1}s;">${char}</span>`;
+        }
+        element.innerHTML = wrappedHtml;
+    }
+
+    // =======================================================
+    // III. LỌC VÀ PHÂN TRANG
+    // =======================================================
+
+    function filterCards() {
+        filteredCards = allCards.filter(card => {
+            const cardCat = card.getAttribute('data-cat');
+            const cardSub = card.getAttribute('data-subcat') || '';
+            let shouldShow = false;
+
+            if (currentSubcat && currentSubcat !== 'all') {
+                if (cardSub.includes(currentSubcat)) shouldShow = true;
+            } else if (currentCat) {
+                if (currentCat === 'all' || cardCat === currentCat) shouldShow = true;
+            }
+            return shouldShow;
+        });
+
+        currentPage = 1;
+        setupPagination(filteredCards.length);
+        displayCards(currentPage);
+    }
+
+    function createPageButton(text, pageNumber, isDisabled, isActive = false) {
+        const button = document.createElement('button');
+        button.textContent = text;
+        button.classList.add('px-3', 'py-1', 'rounded-lg', 'font-medium', 'transition-colors');
+
+        if (isDisabled) {
+            button.disabled = true;
+            button.classList.add('bg-gray-200', 'text-gray-500', 'dark:bg-gray-700', 'dark:text-gray-400', 'cursor-not-allowed');
+        } else if (isActive) {
+            button.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700');
+        } else {
+            button.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200', 'dark:bg-gray-800', 'dark:text-gray-300', 'dark:hover:bg-gray-700');
+            button.addEventListener('click', () => {
+                currentPage = pageNumber;
+                displayCards(currentPage);
+                setupPagination(filteredCards.length);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+        return button;
+    }
+
+    function setupPagination(totalItems) {
+        if (!paginationContainer) return;
+        paginationContainer.innerHTML = '';
+        const pageCount = Math.ceil(totalItems / ITEMS_PER_PAGE);
+        if (pageCount <= 1) { paginationContainer.style.display = 'none'; return; }
+
+        paginationContainer.style.display = 'flex';
+        paginationContainer.appendChild(createPageButton('Trước', currentPage - 1, currentPage === 1));
+
+        const maxVisiblePages = 5;
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+
+        if (endPage - startPage + 1 < maxVisiblePages) startPage = Math.max(1, endPage - maxVisiblePages + 1);
+
+        if (startPage > 1) {
+            paginationContainer.appendChild(createPageButton('1', 1, false, 1 === currentPage));
+            if (startPage > 2) paginationContainer.appendChild(createPageButton('...', null, true));
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            paginationContainer.appendChild(createPageButton(i, i, false, i === currentPage));
+        }
+
+        if (endPage < pageCount) {
+            if (endPage < pageCount - 1) paginationContainer.appendChild(createPageButton('...', null, true));
+            paginationContainer.appendChild(createPageButton(pageCount, pageCount, false, pageCount === currentPage));
+        }
+        paginationContainer.appendChild(createPageButton('Sau', currentPage + 1, currentPage === pageCount));
+    }
+
+    function displayCards(page) {
+        const startIndex = (page - 1) * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+        let hasVisible = false;
+        allCards.forEach(card => card.style.display = 'none');
+        filteredCards.forEach((card, index) => {
+            if (index >= startIndex && index < endIndex) {
+                card.style.display = 'flex';
+                hasVisible = true;
+            }
+        });
+        if (emptyMessage) emptyMessage.style.display = hasVisible ? 'none' : 'flex';
+    }
+
+    // =======================================================
+    // IV. CÁC KHỐI SỰ KIỆN
+    // =======================================================
+
+    const openLoginModalBtn = document.getElementById('open-login-modal-btn');
+    const closeButtons = document.querySelectorAll('.modal-close-btn');
+    const logoutLink = document.getElementById('logout-link');
+
+    // --- Anti-DevTools ---
+    (function antiDevToolsLight() {
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase()))) {
+                e.preventDefault();
+            }
+        });
+    })();
+
+    // --- Theme Toggle ---
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement;
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    htmlElement.classList.add(currentTheme);
+
+    function updateThemeButton() {
+        if (!themeToggleBtn) return;
+        themeToggleBtn.innerHTML = htmlElement.classList.contains('dark')
+            ? '<i class="fas fa-sun w-5 h-5 text-yellow-600"></i>'
+            : '<i class="fas fa-moon w-5 h-5 text-indigo-600"></i>';
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            htmlElement.classList.toggle('light');
+            localStorage.setItem('theme', htmlElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeButton();
+        });
+        updateThemeButton();
+    }
+
+    // --- Modal Listeners ---
+    if (openLoginModalBtn) openLoginModalBtn.addEventListener('click', e => { e.preventDefault(); closeAllModals(); openModal('login-modal'); });
+    if (logoutLink) logoutLink.addEventListener('click', e => { e.preventDefault(); closeAllModals(); openModal('logout-modal'); });
+
+    closeButtons.forEach(btn => btn.addEventListener('click', closeAllModals));
+    modals.forEach(modal => modal.addEventListener('click', e => { if (e.target === modal) closeAllModals(); }));
+
+    // --- XỬ LÝ AUTH KẾT NỐI FLASK ---
+
+    // 1. Kiểm tra trạng thái từ API /api/me
+    fetch('/api/me').then(r => r.json()).then(me => {
+        isLoggedIn = me.logged_in;
+        const loginLink = document.getElementById('open-login-modal-btn');
+
+        if (isLoggedIn) {
+            loginLink?.classList.add('hidden');
+            logoutLink?.classList.remove('hidden');
+        } else {
+            loginLink?.classList.remove('hidden');
+            logoutLink?.classList.add('hidden');
+        }
+        updateUnauthorizedOverlays();
+    }).catch(() => updateUnauthorizedOverlays());
+
+    // 2. Xử lý Form Login
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const loginMessage = document.getElementById('login-message');
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const rememberMe = document.getElementById('remember-me')?.checked || false;
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ username, password, rememberMe })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    loginMessage.textContent = 'Đăng nhập thành công!';
+                    setTimeout(() => { window.location.reload(); }, 800);
+                } else {
+                    loginMessage.textContent = data.message || 'Lỗi đăng nhập.';
+                }
+            } catch (err) { loginMessage.textContent = 'Lỗi server.'; }
+        });
+    }
+
+    // 3. Xử lý Đăng xuất
+    const logoutForm = document.getElementById('logout-form');
+    if (logoutForm) {
+        logoutForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await fetch('/api/logout', { method: 'POST' });
+            window.location.reload();
+        });
+    }
+
+    // --- Tabs Handling ---
+    categoryTabsAll.forEach(tab => {
+        tab.addEventListener('click', () => {
+            categoryTabsAll.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentCat = tab.dataset.cat;
+            currentSubcat = null;
+            subcategoryTabsAll.forEach(t => t.classList.remove('active'));
+            filterCards();
+        });
+    });
+
+    subcategoryTabsAll.forEach(tab => {
+        tab.addEventListener('click', () => {
+            subcategoryTabsAll.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentSubcat = tab.dataset.subcat;
+            filterCards();
+        });
+    });
+
+    // --- Iframe Embed Logic ---
+    const resourceContent = document.getElementById('resource-content');
+    const embedWrapper = document.getElementById('embed-wrapper');
+    const toolIframe = document.getElementById('tool-iframe');
+    const embedTitle = document.getElementById('embed-title');
+    const loadingSpinner = document.getElementById('loading-spinner-overlay');
+    const closeEmbedBtn = document.getElementById('close-embed-btn');
+
+    function activateEmbedMode(toolId) {
+        if (!toolIframe) return;
+        let url = toolId === 'veo3' ? 'https://labs.google/fx/tools/flow' : 'https://ai-generator.artlist.io/image-to-image-ai/nano-banana-pro';
+        loadingSpinner.style.display = 'flex';
+        resourceContent.style.display = 'none';
+        embedTitle.textContent = toolId === 'veo3' ? 'Công cụ: AI veo3' : 'Công cụ: Nano Banana Pro';
+        toolIframe.src = url;
+        embedWrapper.style.display = 'block';
+    }
+
+    if (closeEmbedBtn) {
+        closeEmbedBtn.addEventListener('click', () => {
+            embedWrapper.style.display = 'none';
+            toolIframe.src = '';
+            resourceContent.style.display = 'block';
+        });
+    }
+
+    document.querySelectorAll('.dropdown-item[data-tool-id]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            activateEmbedMode(e.currentTarget.getAttribute('data-tool-id'));
+        });
+    });
+
+    if (toolIframe) toolIframe.addEventListener('load', () => { loadingSpinner.style.display = 'none'; });
+
+    // =======================================================
+    // V. XEM CHI TIẾT ẢNH
+    // =======================================================
+
+    const imageDetailModal = document.getElementById('image-detail-modal');
+    const detailImage = document.getElementById('detail-image');
+    const detailTitle = document.getElementById('detail-title');
+    const detailCategory = document.getElementById('detail-category');
+    const detailDescription = document.getElementById('detail-description');
+    const detailDownloadBtn = document.getElementById('detail-download-btn');
+
+    function openImageDetail(card) {
+        if (!isLoggedIn) return; // Chỉ cho phép xem khi đã đăng nhập
+
+        const img = card.dataset.img || card.querySelector('.material-image').src;
+        const title = card.dataset.title || card.querySelector('.material-title').textContent;
+        const category = card.dataset.cat || '';
+        const description = card.dataset.desc || 'Không có mô tả chi tiết.';
+        const downloadUrl = card.dataset.download || '#';
+
+        detailImage.src = img;
+        detailTitle.textContent = title;
+        detailCategory.textContent = category;
+        detailDescription.textContent = description;
+
+        detailDownloadBtn.onclick = () => {
+            if (downloadUrl !== '#') {
+                window.open(downloadUrl, '_blank');
+            } else {
+                alert('Chức năng tải xuống đang được cập nhật!');
+            }
+        };
+
+        openModal('image-detail-modal');
+    }
+
+    // Thêm event listener cho tất cả các card
+    allCards.forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', (e) => {
+            // Không mở modal nếu click vào overlay hoặc nút trong overlay
+            if (e.target.closest('.unauthorized-overlay') ||
+                e.target.closest('.material-button') ||
+                e.target.closest('.download-btn')) {
+                return;
+            }
+            openImageDetail(card);
+        });
+    });
+
+    // =======================================================
+    // VI. KHỞI CHẠY BAN ĐẦU
+    // =======================================================
+    document.querySelector('.category-tab[data-cat="nhanvat"]')?.classList.add('active');
+    wrapLetters('empty-message');
+    filterCards();
+});
