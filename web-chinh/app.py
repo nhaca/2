@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from flask import (
+    Flask, request, jsonify, session,
+    render_template, Response, abort
+)
 from functools import wraps
-import json
-import os
 from datetime import timedelta
+import os, json, requests, urllib.parse
 
 app = Flask(__name__)
 
@@ -11,44 +13,38 @@ app.secret_key = os.environ.get(
     "SECRET_KEY",
     "phuc_dep_zai_secret_key_vatlieugau"
 )
-
 app.permanent_session_lifetime = timedelta(days=30)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 USERS_FILE = os.path.join(BASE_DIR, "users.json")
 
+# Chỉ cho phép proxy từ domain này (đổi nếu cần)
+ALLOWED_IMAGE_PREFIX = (
+    "https://i.ibb.co/",
+)
+
 # ================== UTIL ==================
 def load_users():
     if not os.path.exists(USERS_FILE):
-        print("❌ users.json không tồn tại")
         return []
-    try:
-        with open(USERS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        print("❌ Lỗi đọc users.json:", e)
-        return []
+    with open(USERS_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-def login_required(view_func):
-    @wraps(view_func)
+def login_required_api(f):
+    @wraps(f)
     def wrapper(*args, **kwargs):
         if not session.get("username"):
-            return redirect(url_for("home"))
-        return view_func(*args, **kwargs)
+            return jsonify(success=False, message="Unauthorized"), 401
+        return f(*args, **kwargs)
     return wrapper
 
-# ================== ROUTES ==================
-
+# ================== PAGES ==================
 @app.route("/")
 def home():
-    username = session.get("username")
-    return render_template(
-        "index.html",
-        logged_in=bool(username),
-        username=username
-    )
+    return render_template("index.html")
 
-@app.route("/login", methods=["POST"])
+# ================== AUTH ==================
+@app.route("/api/login", methods=["POST"])
 def login():
     data = request.json or {}
     username = data.get("username", "").strip()
@@ -58,24 +54,74 @@ def login():
     if not username or not password:
         return jsonify(success=False, message="Thiếu tài khoản hoặc mật khẩu")
 
-    users = load_users()
-    for u in users:
+    for u in load_users():
         if u.get("username") == username and u.get("password") == password:
             session["username"] = username
             session.permanent = remember
-            return jsonify(success=True, redirect="/")
+            return jsonify(success=True, username=username)
 
     return jsonify(success=False, message="Sai tài khoản hoặc mật khẩu")
 
-@app.route("/logout")
+@app.route("/api/logout", methods=["POST"])
 def logout():
     session.clear()
-    return redirect("/")
+    return jsonify(success=True)
 
-# ================== API BẢO VỆ (VÍ DỤ) ==================
+@app.route("/api/me")
+def me():
+    return jsonify(
+        logged_in=bool(session.get("username")),
+        username=session.get("username")
+    )
 
-@app.route("/api/download/<path:filename>")
-@login_required
-def download(filename):
-    return jsonify(success=True, file=filename)
+# ================== IMAGE PROXY (IMPORT LINK) ==================
+@app.route("/img_proxy")
+def img_proxy():
+    # Bắt buộc đăng nhập
+    if not session.get("username"):
+        abort(403)
 
+    raw_url = request.args.get("url")
+    if not raw_url:
+        abort(400)
+
+    # Decode URL
+    url = urllib.parse.unquote(raw_url)
+
+    # Chặn domain lạ
+    if not url.startswith(ALLOWED_IMAGE_PREFIX):
+        abort(403)
+
+    try:
+        r = requests.get(url, timeout=8)
+        if r.status_code != 200:
+            abort(404)
+
+        content_type = r.headers.get("Content-Type", "image/png")
+
+        return Response(
+            r.content,
+            mimetype=content_type,
+            headers={
+                "Cache-Control": "no-store",
+                "X-Content-Type-Options": "nosniff"
+            }
+        )
+    except requests.RequestException:
+        abort(502)
+
+# ================== DEMO API (OPTIONAL) ==================
+@app.route("/api/resources")
+@login_required_api
+def resources():
+    # Ví dụ backend trả dữ liệu (HTML không cần nhúng dữ liệu)
+    return jsonify([
+        {
+            "title": "Nhân Vật",
+            "img": "https://i.ibb.co/j90ZdyLY/1723212151.png",
+            "vip": True
+        }
+    ])
+
+# ❌ KHÔNG app.run()
+# Render / Gunicorn sẽ tự chạy
