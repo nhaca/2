@@ -214,19 +214,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- XỬ LÝ AUTH KẾT NỐI FLASK ---
 
     // 1. Kiểm tra trạng thái từ API /api/me
-    fetch('/api/me').then(r => r.json()).then(me => {
-        isLoggedIn = me.logged_in;
-        const loginLink = document.getElementById('open-login-modal-btn');
+    fetch('/api/me')
+  .then(r => r.json())
+  .then(me => {
+      isLoggedIn = me.logged_in;
 
-        if (isLoggedIn) {
-            loginLink?.classList.add('hidden');
-            logoutLink?.classList.remove('hidden');
-        } else {
-            loginLink?.classList.remove('hidden');
-            logoutLink?.classList.add('hidden');
-        }
-        updateUnauthorizedOverlays();
-    }).catch(() => updateUnauthorizedOverlays());
+      const welcomeText = document.getElementById('welcome-text');
+      const accountLabel = document.getElementById('account-label');
+      const loginLink = document.getElementById('open-login-modal-btn');
+
+      if (isLoggedIn) {
+          loginLink?.classList.add('hidden');
+          logoutLink?.classList.remove('hidden');
+
+          if (welcomeText) {
+              welcomeText.textContent = `Xin chào, ${me.username} 👋`;
+              welcomeText.classList.remove('hidden');
+          }
+          if (accountLabel) {
+              accountLabel.classList.add('hidden'); // Ẩn chữ "Tài khoản"
+          }
+
+      } else {
+          loginLink?.classList.remove('hidden');
+          logoutLink?.classList.add('hidden');
+
+          welcomeText?.classList.add('hidden');
+          accountLabel?.classList.remove('hidden');
+      }
+
+      updateUnauthorizedOverlays();
+  })
+  .catch(() => updateUnauthorizedOverlays());
+
 
     // 2. Xử lý Form Login
     const loginForm = document.getElementById('login-form');
@@ -378,3 +398,4 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapLetters('empty-message');
     filterCards();
 });
+
