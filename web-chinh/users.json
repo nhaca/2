@@ -1,12 +1,18 @@
 [
   {
-    "username": "admin",
-    "password": "adminphucdepzai@",
-    "role": "admin"
+    "username": "changhoangtu",
+    "password": "changhoangtu25@",
+    "role": "user"
   },
   {
-    "username": "user1",
-    "password": "123456",
+    "username": "nguyennhat",
+    "password": "nguyenanimate",
+    "role": "user"
+  }
+  {
+    "username": "adminmhm",
+    "password": "machacminh",
     "role": "user"
   }
 ]
+
