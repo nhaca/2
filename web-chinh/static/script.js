@@ -347,7 +347,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     loginMessage.classList.add('success');
                     isLoggedIn = true;
                     updateUnauthorizedOverlays();
-                    setTimeout(() => { closeAllModals(); window.location.href = data.role==='admin'?"/admin-dashboard":"/user-dashboard"; },1500);
+                    setTimeout(() => {
+                       isLoggedIn = true;
+    updateUnauthorizedOverlays();
+    closeAllModals();
+}, 800);
+
                 } else {
                     loginMessage.textContent = `Đăng nhập thất bại: ${data.message||'Sai tài khoản hoặc mật khẩu.'}`;
                     loginMessage.classList.add('error');
@@ -549,5 +554,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.category-tab[data-cat="nhanvat"]')?.classList.add('active');
     wrapLetters('empty-message'); // Bật animation cho tin nhắn rỗng
     filterCards(); // Bắt đầu bằng việc lọc và hiển thị trang đầu tiên
+
 
 });
