@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // =======================================================
     const ITEMS_PER_PAGE = 20;
     let isLoggedIn = false;
+    let currentUser = null;
 
     const categoryTabsAll = document.querySelectorAll('.category-tab');
     const subcategoryTabsAll = document.querySelectorAll('.subcategory-tab');
@@ -12,420 +13,202 @@ document.addEventListener('DOMContentLoaded', () => {
     const emptyMessage = document.querySelector('#empty-message');
     const paginationContainer = document.getElementById('pagination');
 
-    let currentCat = 'nhanvat';
-    let currentSubcat = null;
-    let currentPage = 1;
-    let filteredCards = [];
-
-    // =======================================================
-    // II. HÀM CHUNG VÀ MODAL UTILITIES
-    // =======================================================
-
-    const modals = document.querySelectorAll('.modal-overlay');
-    function openModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.remove('hidden');
-            modal.classList.add('visible');
-            document.body.style.overflow = 'hidden';
-        }
-    }
-    function closeAllModals() {
-        modals.forEach(modal => {
-            modal.classList.remove('visible');
-            modal.classList.add('hidden');
-        });
-        document.body.style.overflow = '';
-    }
-
-    // Cập nhật lớp phủ khóa nội dung
-    function updateUnauthorizedOverlays() {
-        const overlays = document.querySelectorAll('.unauthorized-overlay');
-        overlays.forEach(overlay => {
-            if (isLoggedIn) {
-                overlay.classList.remove('visible');
-                overlay.style.display = 'none';
-            } else {
-                overlay.classList.add('visible');
-                overlay.style.display = 'flex';
-            }
-        });
-    }
-
-    window.handleUnauthorizedClick = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        if (!isLoggedIn) {
-            closeAllModals();
-            openModal('login-modal');
-        }
-    };
-
-    function wrapLetters(elementId) {
-        const element = document.getElementById(elementId);
-        if (!element) return;
-        const text = element.textContent.trim();
-        let wrappedHtml = '';
-        for (let i = 0; i < text.length; i++) {
-            const char = text[i] === ' ' ? '&nbsp;' : text[i];
-            wrappedHtml += `<span style="animation-delay: ${i * 0.1}s;">${char}</span>`;
-        }
-        element.innerHTML = wrappedHtml;
-    }
-
-    // =======================================================
-    // III. LỌC VÀ PHÂN TRANG
-    // =======================================================
-
-    function filterCards() {
-        filteredCards = allCards.filter(card => {
-            const cardCat = card.getAttribute('data-cat');
-            const cardSub = card.getAttribute('data-subcat') || '';
-            let shouldShow = false;
-
-            if (currentSubcat && currentSubcat !== 'all') {
-                if (cardSub.includes(currentSubcat)) shouldShow = true;
-            } else if (currentCat) {
-                if (currentCat === 'all' || cardCat === currentCat) shouldShow = true;
-            }
-            return shouldShow;
-        });
-
-        currentPage = 1;
-        setupPagination(filteredCards.length);
-        displayCards(currentPage);
-    }
-
-    function createPageButton(text, pageNumber, isDisabled, isActive = false) {
-        const button = document.createElement('button');
-        button.textContent = text;
-        button.classList.add('px-3', 'py-1', 'rounded-lg', 'font-medium', 'transition-colors');
-
-        if (isDisabled) {
-            button.disabled = true;
-            button.classList.add('bg-gray-200', 'text-gray-500', 'dark:bg-gray-700', 'dark:text-gray-400', 'cursor-not-allowed');
-        } else if (isActive) {
-            button.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700');
-        } else {
-            button.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200', 'dark:bg-gray-800', 'dark:text-gray-300', 'dark:hover:bg-gray-700');
-            button.addEventListener('click', () => {
-                currentPage = pageNumber;
-                displayCards(currentPage);
-                setupPagination(filteredCards.length);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
-        return button;
-    }
-
-    function setupPagination(totalItems) {
-        if (!paginationContainer) return;
-        paginationContainer.innerHTML = '';
-        const pageCount = Math.ceil(totalItems / ITEMS_PER_PAGE);
-        if (pageCount <= 1) { paginationContainer.style.display = 'none'; return; }
-
-        paginationContainer.style.display = 'flex';
-        paginationContainer.appendChild(createPageButton('Trước', currentPage - 1, currentPage === 1));
-
-        const maxVisiblePages = 5;
-        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-        let endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
-
-        if (endPage - startPage + 1 < maxVisiblePages) startPage = Math.max(1, endPage - maxVisiblePages + 1);
-
-        if (startPage > 1) {
-            paginationContainer.appendChild(createPageButton('1', 1, false, 1 === currentPage));
-            if (startPage > 2) paginationContainer.appendChild(createPageButton('...', null, true));
-        }
-
-        for (let i = startPage; i <= endPage; i++) {
-            paginationContainer.appendChild(createPageButton(i, i, false, i === currentPage));
-        }
-
-        if (endPage < pageCount) {
-            if (endPage < pageCount - 1) paginationContainer.appendChild(createPageButton('...', null, true));
-            paginationContainer.appendChild(createPageButton(pageCount, pageCount, false, pageCount === currentPage));
-        }
-        paginationContainer.appendChild(createPageButton('Sau', currentPage + 1, currentPage === pageCount));
-    }
-
-    function displayCards(page) {
-    const startIndex = (page - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    let hasVisible = false;
-
-    allCards.forEach(card => card.style.display = 'none');
-
-    filteredCards.forEach((card, index) => {
-        if (index >= startIndex && index < endIndex) {
-            // --- LOGIC BẢO MẬT ẢNH ---
-            const imgElement = card.querySelector('.material-image');
-            // Lấy link gốc từ dataset (ví dụ data-img)
-            const originalUrl = card.dataset.img; 
-
-            if (imgElement && originalUrl) {
-                // Chuyển đổi sang link proxy thông qua Backend Flask
-                // Sử dụng encodeURIComponent để tránh lỗi ký tự đặc biệt trong URL
-                const secureUrl = `/img_proxy?url=${encodeURIComponent(originalUrl)}`;
-                
-                // Chỉ gán nếu src khác để tránh load lại ảnh không cần thiết
-                if (imgElement.src !== window.location.origin + secureUrl) {
-                    imgElement.src = secureUrl;
-                }
-            }
-            // --------------------------
-
-            card.style.display = 'flex';
-            hasVisible = true;
-        }
-    });
-
-    if (emptyMessage) emptyMessage.style.display = hasVisible ? 'none' : 'flex';
-}
-
-    // =======================================================
-    // IV. CÁC KHỐI SỰ KIỆN
-    // =======================================================
-
-    const openLoginModalBtn = document.getElementById('open-login-modal-btn');
-    const closeButtons = document.querySelectorAll('.modal-close-btn');
-    const logoutLink = document.getElementById('logout-link');
-
-    // --- Anti-DevTools ---
-    (function antiDevToolsLight() {
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('keydown', e => {
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase()))) {
-                e.preventDefault();
-            }
-        });
-    })();
-
-    // --- Theme Toggle ---
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const htmlElement = document.documentElement;
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    htmlElement.classList.add(currentTheme);
-
-    function updateThemeButton() {
-        if (!themeToggleBtn) return;
-        themeToggleBtn.innerHTML = htmlElement.classList.contains('dark')
-            ? '<i class="fas fa-sun w-5 h-5 text-yellow-600"></i>'
-            : '<i class="fas fa-moon w-5 h-5 text-indigo-600"></i>';
-    }
-
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
-            htmlElement.classList.toggle('dark');
-            htmlElement.classList.toggle('light');
-            localStorage.setItem('theme', htmlElement.classList.contains('dark') ? 'dark' : 'light');
-            updateThemeButton();
-        });
-        updateThemeButton();
-    }
-
-    // --- Modal Listeners ---
-    if (openLoginModalBtn) openLoginModalBtn.addEventListener('click', e => { e.preventDefault(); closeAllModals(); openModal('login-modal'); });
-    if (logoutLink) logoutLink.addEventListener('click', e => { e.preventDefault(); closeAllModals(); openModal('logout-modal'); });
-
-    closeButtons.forEach(btn => btn.addEventListener('click', closeAllModals));
-    modals.forEach(modal => modal.addEventListener('click', e => { if (e.target === modal) closeAllModals(); }));
-
-    // --- XỬ LÝ AUTH KẾT NỐI FLASK ---
-
-    // 1. Kiểm tra trạng thái từ API /api/me
-    fetch('/api/me')
-  .then(r => r.json())
-  .then(me => {
-      isLoggedIn = me.logged_in;
-
-      const welcomeText = document.getElementById('welcome-text');
-      const accountLabel = document.getElementById('account-label');
-      const loginLink = document.getElementById('open-login-modal-btn');
-
-      if (isLoggedIn) {
-          loginLink?.classList.add('hidden');
-          logoutLink?.classList.remove('hidden');
-
-          if (welcomeText) {
-              welcomeText.textContent = `Xin chào, ${me.username} 👋`;
-              welcomeText.classList.remove('hidden');
-          }
-          if (accountLabel) {
-              accountLabel.classList.add('hidden'); // Ẩn chữ "Tài khoản"
-          }
-
-      } else {
-          loginLink?.classList.remove('hidden');
-          logoutLink?.classList.add('hidden');
-
-          welcomeText?.classList.add('hidden');
-          accountLabel?.classList.remove('hidden');
-      }
-
-      updateUnauthorizedOverlays();
-  })
-  .catch(() => updateUnauthorizedOverlays());
-
-
-    // 2. Xử lý Form Login
-    const loginForm = document.getElementById('login-form');
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const loginMessage = document.getElementById('login-message');
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const rememberMe = document.getElementById('remember-me')?.checked || false;
-
-            try {
-                const response = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ username, password, rememberMe })
-                });
-                const data = await response.json();
-                if (data.success) {
-                    loginMessage.textContent = 'Đăng nhập thành công!';
-                    setTimeout(() => { window.location.reload(); }, 800);
-                } else {
-                    loginMessage.textContent = data.message || 'Lỗi đăng nhập.';
-                }
-            } catch (err) { loginMessage.textContent = 'Lỗi server.'; }
-        });
-    }
-
-    // 3. Xử lý Đăng xuất
-    const logoutForm = document.getElementById('logout-form');
-    if (logoutForm) {
-        logoutForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            await fetch('/api/logout', { method: 'POST' });
-            window.location.reload();
-        });
-    }
-
-    // --- Tabs Handling ---
-    categoryTabsAll.forEach(tab => {
-        tab.addEventListener('click', () => {
-            categoryTabsAll.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            currentCat = tab.dataset.cat;
-            currentSubcat = null;
-            subcategoryTabsAll.forEach(t => t.classList.remove('active'));
-            filterCards();
-        });
-    });
-
-    subcategoryTabsAll.forEach(tab => {
-        tab.addEventListener('click', () => {
-            subcategoryTabsAll.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            currentSubcat = tab.dataset.subcat;
-            filterCards();
-        });
-    });
-
-    // --- Iframe Embed Logic ---
-    const resourceContent = document.getElementById('resource-content');
-    const embedWrapper = document.getElementById('embed-wrapper');
-    const toolIframe = document.getElementById('tool-iframe');
-    const embedTitle = document.getElementById('embed-title');
-    const loadingSpinner = document.getElementById('loading-spinner-overlay');
-    const closeEmbedBtn = document.getElementById('close-embed-btn');
-
-    function activateEmbedMode(toolId) {
-        if (!toolIframe) return;
-        let url = toolId === 'veo3' ? 'https://labs.google/fx/tools/flow' : 'https://ai-generator.artlist.io/image-to-image-ai/nano-banana-pro';
-        loadingSpinner.style.display = 'flex';
-        resourceContent.style.display = 'none';
-        embedTitle.textContent = toolId === 'veo3' ? 'Công cụ: AI veo3' : 'Công cụ: Nano Banana Pro';
-        toolIframe.src = url;
-        embedWrapper.style.display = 'block';
-    }
-
-    if (closeEmbedBtn) {
-        closeEmbedBtn.addEventListener('click', () => {
-            embedWrapper.style.display = 'none';
-            toolIframe.src = '';
-            resourceContent.style.display = 'block';
-        });
-    }
-
-    document.querySelectorAll('.dropdown-item[data-tool-id]').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            activateEmbedMode(e.currentTarget.getAttribute('data-tool-id'));
-        });
-    });
-
-    if (toolIframe) toolIframe.addEventListener('load', () => { loadingSpinner.style.display = 'none'; });
-
-    // =======================================================
-    // V. XEM CHI TIẾT ẢNH
-    // =======================================================
-
-    const imageDetailModal = document.getElementById('image-detail-modal');
+    // Các thành phần Modal Chi tiết
     const detailImage = document.getElementById('detail-image');
     const detailTitle = document.getElementById('detail-title');
     const detailCategory = document.getElementById('detail-category');
     const detailDescription = document.getElementById('detail-description');
     const detailDownloadBtn = document.getElementById('detail-download-btn');
 
-    function openImageDetail(card) {
-    if (!isLoggedIn) return; // Chỉ cho phép xem khi đã đăng nhập
+    let currentCat = 'nhanvat';
+    let currentSubcat = null;
+    let currentPage = 1;
+    let filteredCards = [];
 
-    // Ưu tiên lấy link từ dataset để đảm bảo là link gốc chưa bị xử lý
-    const originalImgUrl = card.dataset.img || card.querySelector('.material-image').src;
-    const title = card.dataset.title || card.querySelector('.material-title').textContent;
-    const category = card.dataset.cat || '';
-    const description = card.dataset.desc || 'Không có mô tả chi tiết.';
-    const downloadUrl = card.dataset.download || '#';
-
-    // Chuyển đổi link ảnh sang dạng Proxy bảo mật
-    const secureImgUrl = `/img_proxy?url=${encodeURIComponent(originalImgUrl)}`;
-
-    // Gán các giá trị vào Modal chi tiết
-    detailImage.src = secureImgUrl; // Hiển thị ảnh qua proxy
-    detailTitle.textContent = title;
-    detailCategory.textContent = category;
-    detailDescription.textContent = description;
-
-    detailDownloadBtn.onclick = () => {
-        if (downloadUrl !== '#') {
-            // Đối với nút tải xuống, bạn cũng nên hướng qua một route proxy nếu muốn giấu link tải
-            window.open(downloadUrl, '_blank');
-        } else {
-            alert('Chức năng tải xuống đang được cập nhật!');
+    // =======================================================
+    // II. KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP (API)
+    // =======================================================
+    async function checkAuth() {
+        try {
+            const res = await fetch('/api/me');
+            const data = await res.json();
+            if (data.logged_in) {
+                isLoggedIn = true;
+                currentUser = data.username;
+                updateAuthUI(true);
+            } else {
+                isLoggedIn = false;
+                updateAuthUI(false);
+            }
+        } catch (err) {
+            console.error("Auth check failed:", err);
+            updateAuthUI(false);
         }
-    };
+        filterCards(); // Sau khi check auth thì mới filter để hiện/ẩn khóa
+    }
 
-    openModal('image-detail-modal');
-}
+    function updateAuthUI(logged) {
+        const loginBtn = document.getElementById('login-nav-btn');
+        const logoutBtn = document.getElementById('logout-nav-btn');
+        const overlays = document.querySelectorAll('.unauthorized-overlay');
+
+        if (logged) {
+            if (loginBtn) loginBtn.classList.add('hidden');
+            if (logoutBtn) logoutBtn.classList.remove('hidden');
+            overlays.forEach(ov => ov.classList.add('hidden'));
+        } else {
+            if (loginBtn) loginBtn.classList.remove('hidden');
+            if (logoutBtn) logoutBtn.classList.add('hidden');
+            overlays.forEach(ov => ov.classList.remove('hidden'));
+        }
+    }
+
+    // =======================================================
+    // III. XỬ LÝ ẢNH QUA PROXY (BẢO MẬT)
+    // =======================================================
+    function getSecureUrl(originalUrl) {
+        if (!originalUrl || originalUrl.startsWith('data:')) return originalUrl;
+        // Gửi URL gốc qua endpoint proxy của Flask
+        return `/img_proxy?url=${encodeURIComponent(originalUrl)}`;
+    }
+
+    // =======================================================
+    // IV. HIỂN THỊ VÀ PHÂN TRANG
+    // =======================================================
+    function filterCards() {
+        filteredCards = allCards.filter(card => {
+            const catMatch = card.dataset.cat === currentCat;
+            const subcatMatch = !currentSubcat || card.dataset.subcat === currentSubcat;
+            return catMatch && subcatMatch;
+        });
+
+        currentPage = 1;
+        displayCards(currentPage);
+        setupPagination();
+    }
+
+    function displayCards(page) {
+        const startIndex = (page - 1) * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+        let hasVisible = false;
+
+        allCards.forEach(card => card.style.display = 'none');
+
+        filteredCards.forEach((card, index) => {
+            if (index >= startIndex && index < endIndex) {
+                card.style.display = 'flex';
+                hasVisible = true;
+
+                // Bảo mật ảnh: Load ảnh qua proxy khi thẻ được hiển thị
+                const imgEl = card.querySelector('.material-image');
+                const rawUrl = card.dataset.img;
+                if (imgEl && rawUrl && isLoggedIn) {
+                    const secureUrl = getSecureUrl(rawUrl);
+                    if (imgEl.src !== window.location.origin + secureUrl) {
+                        imgEl.src = secureUrl;
+                    }
+                }
+            }
+        });
+
+        if (emptyMessage) emptyMessage.style.display = hasVisible ? 'none' : 'flex';
+    }
+
+    function setupPagination() {
+        if (!paginationContainer) return;
+        paginationContainer.innerHTML = '';
+        const pageCount = Math.ceil(filteredCards.length / ITEMS_PER_PAGE);
+        if (pageCount <= 1) return;
+
+        for (let i = 1; i <= pageCount; i++) {
+            const btn = document.createElement('button');
+            btn.innerText = i;
+            btn.classList.add('page-btn');
+            if (i === currentPage) btn.classList.add('active');
+            btn.addEventListener('click', () => {
+                currentPage = i;
+                displayCards(currentPage);
+                document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            paginationContainer.appendChild(btn);
+        }
+    }
+
+    // =======================================================
+    // V. MODAL CHI TIẾT
+    // =======================================================
+    function openImageDetail(card) {
+        if (!isLoggedIn) {
+            openModal('login-modal'); // Nếu chưa đăng nhập thì hiện form login
+            return;
+        }
+
+        const rawImg = card.dataset.img;
+        const title = card.dataset.title || card.querySelector('.material-title').textContent;
+        const description = card.dataset.desc || 'Tài liệu đồ họa chất lượng cao.';
+        const downloadUrl = card.dataset.download || '#';
+
+        // Gán ảnh qua Proxy
+        detailImage.src = getSecureUrl(rawImg);
+        detailTitle.textContent = title;
+        detailDescription.textContent = description;
+
+        detailDownloadBtn.onclick = () => {
+            if (downloadUrl !== '#') {
+                window.open(downloadUrl, '_blank');
+            } else {
+                alert('Chức năng tải xuống đang được bảo trì!');
+            }
+        };
 
         openModal('image-detail-modal');
     }
 
-    // Thêm event listener cho tất cả các card
+    // =======================================================
+    // VI. UTILITIES (MODAL, THEME, v.v.)
+    // =======================================================
+    function openModal(id) {
+        const m = document.getElementById(id);
+        if (m) {
+            m.classList.remove('hidden');
+            m.classList.add('visible');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    window.closeModal = function(id) {
+        const m = document.getElementById(id);
+        if (m) {
+            m.classList.add('hidden');
+            m.classList.remove('visible');
+            document.body.style.overflow = '';
+        }
+    };
+
+    // Sự kiện click vào Card
     allCards.forEach(card => {
-        card.style.cursor = 'pointer';
         card.addEventListener('click', (e) => {
-            // Không mở modal nếu click vào overlay hoặc nút trong overlay
-            if (e.target.closest('.unauthorized-overlay') ||
-                e.target.closest('.material-button') ||
-                e.target.closest('.download-btn')) {
+            if (e.target.closest('.unauthorized-overlay')) {
+                openModal('login-modal');
                 return;
             }
             openImageDetail(card);
         });
     });
 
-    // =======================================================
-    // VI. KHỞI CHẠY BAN ĐẦU
-    // =======================================================
-    document.querySelector('.category-tab[data-cat="nhanvat"]')?.classList.add('active');
-    wrapLetters('empty-message');
-    filterCards();
+    // Sự kiện Menu Tab
+    categoryTabsAll.forEach(tab => {
+        tab.addEventListener('click', () => {
+            categoryTabsAll.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentCat = tab.dataset.cat;
+            currentSubcat = null;
+            filterCards();
+        });
+    });
+
+    // Khởi chạy
+    checkAuth();
 });
-
-
