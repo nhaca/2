@@ -10,7 +10,6 @@ import requests
 app = Flask(__name__)
 
 # ================== CONFIG ==================
-# ⚠️ Production nên dùng biến môi trường
 app.secret_key = os.environ.get("SECRET_KEY", "sk-gttURQqGrEIovSGrsDfkD9Hw8H5REP3MQwQjPWGfZUqzo7vH")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -24,7 +23,7 @@ def load_users():
     try:
         with open(USERS_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
-    except (json.JSONDecodeError, IOError):
+    except Exception:
         return []
 
 
@@ -33,18 +32,20 @@ def save_users(users):
         json.dump(users, f, ensure_ascii=False, indent=4)
 
 
-def ensure_admin():
+def ensure_default_user():
+    """
+    Tạo sẵn 1 tài khoản mặc định nếu file users.json trống
+    """
     users = load_users()
-    if not any(u.get("role") == "admin" for u in users):
+    if not users:
         users.append({
             "username": "admin",
-            "password": "123",  # ⚠️ đổi khi deploy
-            "role": "admin"
+            "password": "123"
         })
         save_users(users)
 
 
-ensure_admin()
+ensure_default_user()
 
 
 # ================== AUTH GUARD ==================
@@ -57,35 +58,10 @@ def login_required(f):
     return decorated
 
 
-def admin_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        if not session.get("username"):
-            return jsonify(success=False, message="Chưa đăng nhập"), 401
-        if session.get("role") != "admin":
-            return jsonify(success=False, message="Quyền truy cập bị từ chối"), 403
-        return f(*args, **kwargs)
-    return decorated
-
-
 # ================== PAGES ==================
 @app.route("/")
 def home():
     return render_template("index.html")
-
-
-@app.route("/user-dashboard")
-def user_dashboard():
-    if not session.get("username"):
-        return redirect("/")
-    return render_template("users/users.html")
-
-
-@app.route("/admin-dashboard")
-def admin_dashboard():
-    if session.get("role") != "admin":
-        return redirect("/")
-    return render_template("users/admin.html")
 
 
 # ================== AUTH API ==================
@@ -102,10 +78,9 @@ def login():
     for u in users:
         if u["username"] == username and u["password"] == password:
             session["username"] = u["username"]
-            session["role"] = u.get("role", "user")
-            return jsonify(success=True, role=session["role"])
+            return jsonify(success=True)
 
-    return jsonify(success=False, message="Tài khoản hoặc mật khẩu không đúng")
+    return jsonify(success=False, message="Sai tài khoản hoặc mật khẩu")
 
 
 @app.route("/api/logout", methods=["POST"])
@@ -120,19 +95,17 @@ def me():
         return jsonify(logged_in=False)
     return jsonify(
         logged_in=True,
-        username=session.get("username"),
-        role=session.get("role", "user")
+        username=session.get("username")
     )
 
 
-# ================== IMAGE PROXY (QUAN TRỌNG) ==================
+# ================== IMAGE PROXY ==================
 @app.route("/img_proxy")
 @login_required
 def img_proxy():
     """
-    Proxy ảnh:
-    - Chỉ user đã đăng nhập mới xem được
-    - Ẩn link ảnh gốc
+    - Chỉ cần đăng nhập là xem được ảnh
+    - Không phân quyền
     """
     img_url = request.args.get("url")
     if not img_url:
@@ -143,13 +116,9 @@ def img_proxy():
         if resp.status_code != 200:
             return "Failed to fetch image", 404
 
-        content_type = resp.headers.get(
-            "Content-Type", "image/jpeg"
-        )
-
         return Response(
             resp.content,
-            content_type=content_type,
+            content_type=resp.headers.get("Content-Type", "image/jpeg"),
             headers={
                 "Cache-Control": "public, max-age=86400"
             }
