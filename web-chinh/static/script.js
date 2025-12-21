@@ -402,4 +402,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.category-tab[data-cat="nhanvat"]')?.classList.add('active');
     wrapLetters('empty-message');
     filterCards();
+    function loadMaterialImages() {
+    document.querySelectorAll('.material-card').forEach(card => {
+        const img = card.querySelector('.material-image');
+        const imgUrl = card.dataset.img;
+
+        if (img && imgUrl && !img.src) {
+            img.src = imgUrl;
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadMaterialImages();
 });
+
+});
+
