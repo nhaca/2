@@ -1,20 +1,24 @@
-from flask import Flask, request, jsonify, render_template, session, redirect
+from flask import (
+    Flask, request, jsonify, render_template,
+    session, redirect, Response
+)
 from functools import wraps
 import json
 import os
+import requests
 
 app = Flask(__name__)
 
-# ⚠️ Production nên dùng biến môi trường để bảo mật
-app.secret_key = os.environ.get("SECRET_KEY", "frdyejgvhj009ejk&$^**@&&*@&&*@^*vsd")
+# ================== CONFIG ==================
+# ⚠️ Production nên dùng biến môi trường
+app.secret_key = os.environ.get("SECRET_KEY", "sk-gttURQqGrEIovSGrsDfkD9Hw8H5REP3MQwQjPWGfZUqzo7vH")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 USERS_FILE = os.path.join(BASE_DIR, "users.json")
 
 
-# ================== UTIL (CÔNG CỤ) ==================
+# ================== UTIL ==================
 def load_users():
-    """Tải danh sách người dùng từ file JSON"""
     if not os.path.exists(USERS_FILE):
         return []
     try:
@@ -25,18 +29,16 @@ def load_users():
 
 
 def save_users(users):
-    """Lưu danh sách người dùng vào file JSON"""
     with open(USERS_FILE, "w", encoding="utf-8") as f:
         json.dump(users, f, ensure_ascii=False, indent=4)
 
 
 def ensure_admin():
-    """Tạo tài khoản admin mặc định nếu chưa tồn tại"""
     users = load_users()
     if not any(u.get("role") == "admin" for u in users):
         users.append({
             "username": "admin",
-            "password": "123", # Bạn có thể đổi mật khẩu tại đây
+            "password": "123",  # ⚠️ đổi khi deploy
             "role": "admin"
         })
         save_users(users)
@@ -45,7 +47,7 @@ def ensure_admin():
 ensure_admin()
 
 
-# ================== AUTH GUARD (BẢO VỆ ROUTE) ==================
+# ================== AUTH GUARD ==================
 def login_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -66,10 +68,9 @@ def admin_required(f):
     return decorated
 
 
-# ================== PAGES (CÁC TRANG GIAO DIỆN) ==================
+# ================== PAGES ==================
 @app.route("/")
 def home():
-    """Trang chủ - JS sẽ xử lý việc ẩn/hiện modal dựa trên session"""
     return render_template("index.html")
 
 
@@ -87,7 +88,7 @@ def admin_dashboard():
     return render_template("users/admin.html")
 
 
-# ================== AUTH API (XỬ LÝ ĐĂNG NHẬP) ==================
+# ================== AUTH API ==================
 @app.route("/api/login", methods=["POST"])
 def login():
     data = request.json or {}
@@ -102,7 +103,6 @@ def login():
         if u["username"] == username and u["password"] == password:
             session["username"] = u["username"]
             session["role"] = u.get("role", "user")
-            # Trả về thành công để JS thực hiện reload trang
             return jsonify(success=True, role=session["role"])
 
     return jsonify(success=False, message="Tài khoản hoặc mật khẩu không đúng")
@@ -110,14 +110,12 @@ def login():
 
 @app.route("/api/logout", methods=["POST"])
 def api_logout():
-    """Xóa session và đăng xuất"""
     session.clear()
     return jsonify(success=True)
 
 
 @app.route("/api/me")
 def me():
-    """Kiểm tra trạng thái đăng nhập hiện tại"""
     if not session.get("username"):
         return jsonify(logged_in=False)
     return jsonify(
@@ -127,7 +125,39 @@ def me():
     )
 
 
-# ================== KHỞI CHẠY ==================
+# ================== IMAGE PROXY (QUAN TRỌNG) ==================
+@app.route("/img_proxy")
+@login_required
+def img_proxy():
+    """
+    Proxy ảnh:
+    - Chỉ user đã đăng nhập mới xem được
+    - Ẩn link ảnh gốc
+    """
+    img_url = request.args.get("url")
+    if not img_url:
+        return "Missing image url", 400
+
+    try:
+        resp = requests.get(img_url, timeout=10)
+        if resp.status_code != 200:
+            return "Failed to fetch image", 404
+
+        content_type = resp.headers.get(
+            "Content-Type", "image/jpeg"
+        )
+
+        return Response(
+            resp.content,
+            content_type=content_type,
+            headers={
+                "Cache-Control": "public, max-age=86400"
+            }
+        )
+    except Exception as e:
+        return f"Error fetching image: {str(e)}", 500
+
+
+# ================== RUN ==================
 if __name__ == "__main__":
-    # debug=True giúp tự động tải lại code khi bạn thay đổi nội dung file .py
     app.run(debug=True)
