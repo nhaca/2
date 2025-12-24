@@ -5,8 +5,8 @@
     "allowed_ids": "all"
   },
   {
-    "username": "test",
-    "password": "test@web",
+    "username": "test1",
+    "password": "testweb",
     "allowed_ids": "all"
   },
   {
@@ -25,4 +25,5 @@
     "allowed_ids": ["123"]
   }
 ]
+
 
