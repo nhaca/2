@@ -1,5 +1,6 @@
 // =======================================================
 // I. CÁC HÀM TOÀN CỤC (GLOBAL SCOPE)
+// Phải nằm ngoài DOMContentLoaded để HTML gọi được qua onclick
 // =======================================================
 
 window.openModal = function(id) {
@@ -73,10 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateUIState() {
+        // Ẩn/Hiện lớp phủ "Đăng nhập để xem" trên từng card
         document.querySelectorAll('.unauthorized-overlay').forEach(overlay => {
             overlay.style.display = isLoggedIn ? 'none' : 'flex';
         });
 
+        // Cập nhật Menu Header (Chào User / Login / Logout)
         if (isLoggedIn) {
             if (loginBtnMenu) loginBtnMenu.classList.add('hidden');
             if (logoutLinkMenu) logoutLinkMenu.classList.remove('hidden');
@@ -91,43 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    if (loginBtnMenu) loginBtnMenu.onclick = () => window.openModal('login-modal');
-    if (logoutLinkMenu) logoutLinkMenu.onclick = () => window.openModal('logout-modal');
-
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const msg = document.getElementById('login-message');
-
-            try {
-                const res = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
-                const data = await res.json();
-                if (data.success) {
-                    location.reload();
-                } else {
-                    msg.textContent = data.message;
-                    msg.style.color = "red";
-                }
-            } catch (err) {
-                msg.textContent = "Lỗi kết nối server!";
-            }
-        });
-    }
-
-    if (logoutForm) {
-        logoutForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            await fetch('/api/logout', { method: 'POST' });
-            location.reload();
-        });
-    }
-
     // --- 2. XỬ LÝ TẢI FILE (DOWNLOAD) ---
 
     function handleDownload(id) {
@@ -135,7 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
             window.openModal('login-modal');
             return;
         }
-        // Gọi API tải file của Flask bằng ID
+        // Gọi API tải file của Flask bằng ID (ví dụ: /api/download/1)
+        // Trình duyệt sẽ tự động nhận diện file tải về
         window.location.href = `/api/download/${id}`;
     }
 
@@ -145,10 +112,16 @@ document.addEventListener('DOMContentLoaded', () => {
         filteredCards = allCards.filter(card => {
             const cardCat = (card.dataset.cat || '').toLowerCase();
             const cardSub = (card.dataset.subcat || '').toLowerCase();
-            if (currentSubcat && currentSubcat !== 'all') return cardSub.includes(currentSubcat);
+            
+            // Lọc theo subcategory nếu có
+            if (currentSubcat && currentSubcat !== 'all') {
+                return cardSub.includes(currentSubcat);
+            }
+            // Lọc theo category chính
             if (currentCat === 'all') return true;
             return cardCat.includes(currentCat);
         });
+        
         currentPage = 1;
         displayCards(currentPage);
         setupPagination(filteredCards.length);
@@ -163,12 +136,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         filteredCards.forEach((card, index) => {
             if (index < start || index >= end) return;
+            
             const img = card.querySelector('.material-image');
             const originalUrl = card.dataset.img;
 
+            // Chỉ hiển thị ảnh qua Proxy nếu đã đăng nhập, nếu chưa thì để trống
             if (img && originalUrl) {
-                img.src = isLoggedIn ? `/img_proxy?url=${encodeURIComponent(originalUrl)}` : "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+                img.src = isLoggedIn 
+                    ? `/img_proxy?url=${encodeURIComponent(originalUrl)}` 
+                    : "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
             }
+            
             card.style.display = 'flex';
             hasVisible = true;
         });
@@ -193,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = document.createElement('button');
         btn.textContent = text;
         btn.className = `px-4 py-2 rounded-lg transition ${active ? 'bg-blue-600 text-white' : 'bg-gray-100 hover:bg-gray-200'}`;
+        
         if (disabled) {
             btn.disabled = true;
             btn.style.opacity = '0.5';
@@ -208,40 +187,44 @@ document.addEventListener('DOMContentLoaded', () => {
         return btn;
     }
 
-    // --- 4. XEM CHI TIẾT & TẢI FILE ---
+    // --- 4. SỰ KIỆN CLICK CARD & XEM CHI TIẾT ---
 
     allCards.forEach(card => {
-        // Sự kiện click vào card (Xem chi tiết)
         card.addEventListener('click', (e) => {
-            // Nếu click trúng nút tải nhanh trên card
+            // Trường hợp 1: Click trúng nút tải nhanh (.download-btn) trên Card
             if (e.target.closest('.download-btn')) {
-                e.stopPropagation();
+                e.stopPropagation(); // Ngăn không cho mở Modal chi tiết
                 handleDownload(card.dataset.id);
                 return;
             }
 
+            // Trường hợp 2: Click vào card khi chưa đăng nhập (trúng lớp phủ)
             if (e.target.closest('.unauthorized-overlay')) return;
 
+            // Trường hợp 3: Mở Modal chi tiết
             if (!isLoggedIn) {
                 window.openModal('login-modal');
                 return;
             }
 
             const data = card.dataset;
-            // Lưu ID hiện tại vào modal để nút download trong modal biết cần tải file nào
             const modal = document.getElementById('image-detail-modal');
-            modal.dataset.currentId = data.id;
+            
+            // Lưu ID hiện tại vào modal để nút download bên trong modal biết cần tải file nào
+            if (modal) {
+                modal.dataset.currentId = data.id;
 
-            document.getElementById('detail-image').src = `/img_proxy?url=${encodeURIComponent(data.img)}`;
-            document.getElementById('detail-title').textContent = data.title;
-            document.getElementById('detail-category').textContent = data.cat;
-            document.getElementById('detail-description').textContent = data.desc || "Không có mô tả.";
+                document.getElementById('detail-image').src = `/img_proxy?url=${encodeURIComponent(data.img)}`;
+                document.getElementById('detail-title').textContent = data.title;
+                document.getElementById('detail-category').textContent = data.cat;
+                document.getElementById('detail-description').textContent = data.desc || "Không có mô tả.";
 
-            window.openModal('image-detail-modal');
+                window.openModal('image-detail-modal');
+            }
         });
     });
 
-    // Sự kiện nút Download trong Modal chi tiết
+    // Nút Download nằm bên trong Modal chi tiết
     const detailDlBtn = document.getElementById('detail-download-btn');
     if (detailDlBtn) {
         detailDlBtn.onclick = () => {
@@ -251,7 +234,43 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // --- 5. TAB EVENTS ---
+    // --- 5. XỬ LÝ FORM ĐĂNG NHẬP / ĐĂNG XUẤT ---
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const msg = document.getElementById('login-message');
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    location.reload(); // Load lại trang để cập nhật trạng thái session
+                } else {
+                    msg.textContent = data.message;
+                    msg.style.color = "red";
+                }
+            } catch (err) {
+                msg.textContent = "Lỗi kết nối server!";
+            }
+        });
+    }
+
+    if (logoutForm) {
+        logoutForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await fetch('/api/logout', { method: 'POST' });
+            location.reload();
+        });
+    }
+
+    // --- 6. SỰ KIỆN CHUYỂN TAB ---
 
     categoryTabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -272,5 +291,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Khởi động hệ thống
     checkAuth();
 });
