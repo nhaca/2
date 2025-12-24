@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // =======================================================
-    // I. KHAI BÁO BIẾN VÀ CẤU HÌNH
-    // =======================================================
+
     const ITEMS_PER_PAGE = 20;
     let isLoggedIn = false;
     let currentUser = null;
@@ -250,3 +248,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Chạy khởi tạo
     checkAuth();
 });
+
