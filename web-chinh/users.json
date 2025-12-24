@@ -13,12 +13,13 @@
     "username": "adminmhm",
     "password": "machacminh"
     "allowed_ids": "all"
-  }
+  },
   {
     "username": "vule",
     "password": "vule@web"
     "allowed_ids": "123"
   }
 ]
+
 
 
