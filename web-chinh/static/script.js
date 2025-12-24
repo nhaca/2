@@ -1,6 +1,5 @@
 // =======================================================
 // I. CÁC HÀM TOÀN CỤC (GLOBAL SCOPE)
-// Phải nằm ngoài DOMContentLoaded để HTML gọi được qua onclick
 // =======================================================
 
 window.openModal = function(id) {
@@ -36,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ITEMS_PER_PAGE = 20;
     let isLoggedIn = false;
     let currentUser = null;
+    let allowedIds = []; // <--- LỖI 1: Phải khai báo biến này ở đây để dùng chung
 
     // DOM Elements
     const allCards = Array.from(document.querySelectorAll('.resources-grid .material-card'));
@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json();
             isLoggedIn = data.logged_in;
             currentUser = data.username;
+            allowedIds = data.allowed_ids || []; // <--- Cập nhật danh sách quyền từ server
             updateUIState();
             filterCards(); 
         } catch (err) {
@@ -74,12 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateUIState() {
-        // Ẩn/Hiện lớp phủ "Đăng nhập để xem" trên từng card
         document.querySelectorAll('.unauthorized-overlay').forEach(overlay => {
             overlay.style.display = isLoggedIn ? 'none' : 'flex';
         });
 
-        // Cập nhật Menu Header (Chào User / Login / Logout)
         if (isLoggedIn) {
             if (loginBtnMenu) loginBtnMenu.classList.add('hidden');
             if (logoutLinkMenu) logoutLinkMenu.classList.remove('hidden');
@@ -98,20 +97,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleDownload(id) {
         if (!isLoggedIn) {
-        window.openModal('login-modal');
-        return;
-    }
+            window.openModal('login-modal');
+            return;
+        }
 
-    // Kiểm tra nhanh ở Client (đã có trong bản code trước)
-    if (allowedIds !== 'all' && !allowedIds.map(String).includes(String(id))) {
-        alert("Bạn chưa được cấp quyền tải tài nguyên này!");
-        return;
-    }
+        // LỖI 2: Kiểm tra quyền tải file
+        // Nếu không phải admin (all) và ID không nằm trong danh sách được phép
+        if (allowedIds !== 'all' && !allowedIds.map(String).includes(String(id))) {
+            alert("Tài khoản của bạn chưa được cấp quyền tải nhân vật này!");
+            return;
+        }
 
-    // Nếu lọt qua client, Server vẫn sẽ check lại. 
-    // Chúng ta dùng một mẹo nhỏ để bắt lỗi từ window.location.href:
-    window.location.href = `/api/download/${id}`;
-}
+        // Nếu hợp lệ, tiến hành tải
+        window.location.href = `/api/download/${id}`;
+    }
 
     // --- 3. XỬ LÝ FILTER & PAGINATION ---
 
@@ -119,16 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
         filteredCards = allCards.filter(card => {
             const cardCat = (card.dataset.cat || '').toLowerCase();
             const cardSub = (card.dataset.subcat || '').toLowerCase();
-            
-            // Lọc theo subcategory nếu có
-            if (currentSubcat && currentSubcat !== 'all') {
-                return cardSub.includes(currentSubcat);
-            }
-            // Lọc theo category chính
+            if (currentSubcat && currentSubcat !== 'all') return cardSub.includes(currentSubcat);
             if (currentCat === 'all') return true;
             return cardCat.includes(currentCat);
         });
-        
         currentPage = 1;
         displayCards(currentPage);
         setupPagination(filteredCards.length);
@@ -143,21 +136,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         filteredCards.forEach((card, index) => {
             if (index < start || index >= end) return;
-            
             const img = card.querySelector('.material-image');
             const originalUrl = card.dataset.img;
-
-            // Chỉ hiển thị ảnh qua Proxy nếu đã đăng nhập, nếu chưa thì để trống
             if (img && originalUrl) {
                 img.src = isLoggedIn 
                     ? `/img_proxy?url=${encodeURIComponent(originalUrl)}` 
                     : "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
             }
-            
             card.style.display = 'flex';
             hasVisible = true;
         });
-
         if (emptyMessage) emptyMessage.style.display = hasVisible ? 'none' : 'flex';
     }
 
@@ -178,11 +166,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = document.createElement('button');
         btn.textContent = text;
         btn.className = `px-4 py-2 rounded-lg transition ${active ? 'bg-blue-600 text-white' : 'bg-gray-100 hover:bg-gray-200'}`;
-        
         if (disabled) {
             btn.disabled = true;
             btn.style.opacity = '0.5';
-            btn.style.cursor = 'not-allowed';
         } else {
             btn.onclick = () => {
                 currentPage = page;
@@ -198,40 +184,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     allCards.forEach(card => {
         card.addEventListener('click', (e) => {
-            // Trường hợp 1: Click trúng nút tải nhanh (.download-btn) trên Card
             if (e.target.closest('.download-btn')) {
-                e.stopPropagation(); // Ngăn không cho mở Modal chi tiết
+                e.stopPropagation();
                 handleDownload(card.dataset.id);
                 return;
             }
-
-            // Trường hợp 2: Click vào card khi chưa đăng nhập (trúng lớp phủ)
             if (e.target.closest('.unauthorized-overlay')) return;
-
-            // Trường hợp 3: Mở Modal chi tiết
             if (!isLoggedIn) {
                 window.openModal('login-modal');
                 return;
             }
-
             const data = card.dataset;
             const modal = document.getElementById('image-detail-modal');
-            
-            // Lưu ID hiện tại vào modal để nút download bên trong modal biết cần tải file nào
             if (modal) {
                 modal.dataset.currentId = data.id;
-
                 document.getElementById('detail-image').src = `/img_proxy?url=${encodeURIComponent(data.img)}`;
                 document.getElementById('detail-title').textContent = data.title;
                 document.getElementById('detail-category').textContent = data.cat;
                 document.getElementById('detail-description').textContent = data.desc || "Không có mô tả.";
-
                 window.openModal('image-detail-modal');
             }
         });
     });
 
-    // Nút Download nằm bên trong Modal chi tiết
     const detailDlBtn = document.getElementById('detail-download-btn');
     if (detailDlBtn) {
         detailDlBtn.onclick = () => {
@@ -241,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // --- 5. XỬ LÝ FORM ĐĂNG NHẬP / ĐĂNG XUẤT ---
+    // --- 5. ĐĂNG NHẬP / ĐĂNG XUẤT ---
 
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
@@ -249,7 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const msg = document.getElementById('login-message');
-
             try {
                 const res = await fetch('/api/login', {
                     method: 'POST',
@@ -258,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 const data = await res.json();
                 if (data.success) {
-                    location.reload(); // Load lại trang để cập nhật trạng thái session
+                    location.reload();
                 } else {
                     msg.textContent = data.message;
                     msg.style.color = "red";
@@ -277,8 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 6. SỰ KIỆN CHUYỂN TAB ---
-
+    // --- 6. CHUYỂN TAB ---
     categoryTabs.forEach(tab => {
         tab.addEventListener('click', () => {
             categoryTabs.forEach(t => t.classList.remove('active'));
@@ -298,7 +271,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Khởi động hệ thống
     checkAuth();
 });
-
