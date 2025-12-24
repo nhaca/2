@@ -98,13 +98,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleDownload(id) {
         if (!isLoggedIn) {
-            window.openModal('login-modal');
-            return;
-        }
-        // Gọi API tải file của Flask bằng ID (ví dụ: /api/download/1)
-        // Trình duyệt sẽ tự động nhận diện file tải về
-        window.location.href = `/api/download/${id}`;
+        window.openModal('login-modal');
+        return;
     }
+
+    // Kiểm tra nhanh ở Client (đã có trong bản code trước)
+    if (allowedIds !== 'all' && !allowedIds.map(String).includes(String(id))) {
+        alert("Bạn chưa được cấp quyền tải tài nguyên này!");
+        return;
+    }
+
+    // Nếu lọt qua client, Server vẫn sẽ check lại. 
+    // Chúng ta dùng một mẹo nhỏ để bắt lỗi từ window.location.href:
+    window.location.href = `/api/download/${id}`;
+}
 
     // --- 3. XỬ LÝ FILTER & PAGINATION ---
 
@@ -294,3 +301,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Khởi động hệ thống
     checkAuth();
 });
+
