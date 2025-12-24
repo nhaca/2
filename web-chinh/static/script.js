@@ -1,6 +1,5 @@
 // =======================================================
 // I. CÁC HÀM TOÀN CỤC (GLOBAL SCOPE)
-// Phải nằm ngoài DOMContentLoaded để HTML gọi được qua onclick
 // =======================================================
 
 window.openModal = function(id) {
@@ -74,12 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateUIState() {
-        // Overlay trên ảnh
         document.querySelectorAll('.unauthorized-overlay').forEach(overlay => {
             overlay.style.display = isLoggedIn ? 'none' : 'flex';
         });
 
-        // Menu Header
         if (isLoggedIn) {
             if (loginBtnMenu) loginBtnMenu.classList.add('hidden');
             if (logoutLinkMenu) logoutLinkMenu.classList.remove('hidden');
@@ -94,11 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Gán sự kiện cho các nút trong Menu Dropdown
     if (loginBtnMenu) loginBtnMenu.onclick = () => window.openModal('login-modal');
     if (logoutLinkMenu) logoutLinkMenu.onclick = () => window.openModal('logout-modal');
 
-    // Submit Đăng nhập
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -125,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Submit Đăng xuất
     if (logoutForm) {
         logoutForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -134,7 +128,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 2. XỬ LÝ FILTER & PAGINATION ---
+    // --- 2. XỬ LÝ TẢI FILE (DOWNLOAD) ---
+
+    function handleDownload(id) {
+        if (!isLoggedIn) {
+            window.openModal('login-modal');
+            return;
+        }
+        // Gọi API tải file của Flask bằng ID
+        window.location.href = `/api/download/${id}`;
+    }
+
+    // --- 3. XỬ LÝ FILTER & PAGINATION ---
 
     function filterCards() {
         filteredCards = allCards.filter(card => {
@@ -203,31 +208,50 @@ document.addEventListener('DOMContentLoaded', () => {
         return btn;
     }
 
-    // --- 3. XEM CHI TIẾT ---
+    // --- 4. XEM CHI TIẾT & TẢI FILE ---
 
     allCards.forEach(card => {
+        // Sự kiện click vào card (Xem chi tiết)
         card.addEventListener('click', (e) => {
-            if (e.target.closest('.unauthorized-overlay') || e.target.closest('.download-btn')) return;
+            // Nếu click trúng nút tải nhanh trên card
+            if (e.target.closest('.download-btn')) {
+                e.stopPropagation();
+                handleDownload(card.dataset.id);
+                return;
+            }
+
+            if (e.target.closest('.unauthorized-overlay')) return;
+
             if (!isLoggedIn) {
                 window.openModal('login-modal');
                 return;
             }
 
             const data = card.dataset;
+            // Lưu ID hiện tại vào modal để nút download trong modal biết cần tải file nào
+            const modal = document.getElementById('image-detail-modal');
+            modal.dataset.currentId = data.id;
+
             document.getElementById('detail-image').src = `/img_proxy?url=${encodeURIComponent(data.img)}`;
             document.getElementById('detail-title').textContent = data.title;
             document.getElementById('detail-category').textContent = data.cat;
             document.getElementById('detail-description').textContent = data.desc || "Không có mô tả.";
-            
-            const dlBtn = document.getElementById('detail-download-btn');
-            const sourceLink = card.querySelector('a')?.href;
-            dlBtn.onclick = () => { if(sourceLink) window.open(sourceLink, '_blank'); };
 
             window.openModal('image-detail-modal');
         });
     });
 
-    // --- 4. TAB EVENTS ---
+    // Sự kiện nút Download trong Modal chi tiết
+    const detailDlBtn = document.getElementById('detail-download-btn');
+    if (detailDlBtn) {
+        detailDlBtn.onclick = () => {
+            const modal = document.getElementById('image-detail-modal');
+            const resId = modal.dataset.currentId;
+            if (resId) handleDownload(resId);
+        };
+    }
+
+    // --- 5. TAB EVENTS ---
 
     categoryTabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -248,6 +272,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Khởi tạo ban đầu
     checkAuth();
 });
