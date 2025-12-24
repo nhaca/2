@@ -1,5 +1,38 @@
-document.addEventListener('DOMContentLoaded', () => {
+// =======================================================
+// I. CÁC HÀM TOÀN CỤC (GLOBAL SCOPE)
+// Phải nằm ngoài DOMContentLoaded để HTML gọi được qua onclick
+// =======================================================
 
+window.openModal = function(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('visible');
+        document.body.style.overflow = 'hidden';
+    }
+};
+
+window.closeAllModals = function() {
+    document.querySelectorAll('.modal-overlay').forEach(m => {
+        m.classList.add('hidden');
+        m.classList.remove('visible');
+    });
+    document.body.style.overflow = '';
+};
+
+window.handleUnauthorizedClick = (e) => {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    window.openModal('login-modal');
+};
+
+// =======================================================
+// II. LOGIC CHÍNH KHI TRANG TẢI XONG
+// =======================================================
+
+document.addEventListener('DOMContentLoaded', () => {
     const ITEMS_PER_PAGE = 20;
     let isLoggedIn = false;
     let currentUser = null;
@@ -11,19 +44,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const paginationContainer = document.getElementById('pagination');
     const emptyMessage = document.querySelector('#empty-message');
     
-    // Forms
+    // Auth Elements
     const loginForm = document.getElementById('login-form');
     const logoutForm = document.getElementById('logout-form');
+    const welcomeText = document.getElementById('welcome-text');
+    const loginBtnMenu = document.getElementById('open-login-modal-btn');
+    const logoutLinkMenu = document.getElementById('logout-link');
 
     // State
-    let currentCat = 'nhanvat'; // Mặc định hiển thị nhân vật
+    let currentCat = 'nhanvat';
     let currentSubcat = null;
     let currentPage = 1;
     let filteredCards = [];
 
-    // =======================================================
-    // II. XỬ LÝ AUTHENTICATION (KẾT NỐI FLASK)
-    // =======================================================
+    // --- 1. XỬ LÝ AUTHENTICATION ---
 
     async function checkAuth() {
         try {
@@ -31,20 +65,40 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json();
             isLoggedIn = data.logged_in;
             currentUser = data.username;
-            updateUnauthorizedOverlays();
-            filterCards(); // Chạy filter sau khi xác định trạng thái login
+            updateUIState();
+            filterCards(); 
         } catch (err) {
             console.error("Auth check failed");
-            updateUnauthorizedOverlays();
+            updateUIState();
         }
     }
 
-    function updateUnauthorizedOverlays() {
+    function updateUIState() {
+        // Overlay trên ảnh
         document.querySelectorAll('.unauthorized-overlay').forEach(overlay => {
             overlay.style.display = isLoggedIn ? 'none' : 'flex';
         });
+
+        // Menu Header
+        if (isLoggedIn) {
+            if (loginBtnMenu) loginBtnMenu.classList.add('hidden');
+            if (logoutLinkMenu) logoutLinkMenu.classList.remove('hidden');
+            if (welcomeText) {
+                welcomeText.textContent = `Chào, ${currentUser}`;
+                welcomeText.classList.remove('hidden');
+            }
+        } else {
+            if (loginBtnMenu) loginBtnMenu.classList.remove('hidden');
+            if (logoutLinkMenu) logoutLinkMenu.classList.add('hidden');
+            if (welcomeText) welcomeText.classList.add('hidden');
+        }
     }
 
+    // Gán sự kiện cho các nút trong Menu Dropdown
+    if (loginBtnMenu) loginBtnMenu.onclick = () => window.openModal('login-modal');
+    if (logoutLinkMenu) logoutLinkMenu.onclick = () => window.openModal('logout-modal');
+
+    // Submit Đăng nhập
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -52,22 +106,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('password').value;
             const msg = document.getElementById('login-message');
 
-            const res = await fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
-            });
-            const data = await res.json();
-
-            if (data.success) {
-                location.reload();
-            } else {
-                msg.textContent = data.message;
-                msg.style.color = "red";
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    location.reload();
+                } else {
+                    msg.textContent = data.message;
+                    msg.style.color = "red";
+                }
+            } catch (err) {
+                msg.textContent = "Lỗi kết nối server!";
             }
         });
     }
 
+    // Submit Đăng xuất
     if (logoutForm) {
         logoutForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -76,22 +134,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // =======================================================
-    // III. BỘ LỌC VÀ PHÂN TRANG (FILTER & PAGINATION)
-    // =======================================================
+    // --- 2. XỬ LÝ FILTER & PAGINATION ---
 
     function filterCards() {
         filteredCards = allCards.filter(card => {
             const cardCat = (card.dataset.cat || '').toLowerCase();
             const cardSub = (card.dataset.subcat || '').toLowerCase();
-
-            if (currentSubcat && currentSubcat !== 'all') {
-                return cardSub.includes(currentSubcat);
-            }
+            if (currentSubcat && currentSubcat !== 'all') return cardSub.includes(currentSubcat);
             if (currentCat === 'all') return true;
             return cardCat.includes(currentCat);
         });
-
         currentPage = 1;
         displayCards(currentPage);
         setupPagination(filteredCards.length);
@@ -106,26 +158,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         filteredCards.forEach((card, index) => {
             if (index < start || index >= end) return;
-
             const img = card.querySelector('.material-image');
             const originalUrl = card.dataset.img;
 
-            // Xử lý ảnh qua Proxy nếu đã login
             if (img && originalUrl) {
-                if (isLoggedIn) {
-                    img.src = `/img_proxy?url=${encodeURIComponent(originalUrl)}`;
-                } else {
-                    img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-                }
+                img.src = isLoggedIn ? `/img_proxy?url=${encodeURIComponent(originalUrl)}` : "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
             }
-
             card.style.display = 'flex';
             hasVisible = true;
         });
 
-        if (emptyMessage) {
-            emptyMessage.style.display = hasVisible ? 'none' : 'flex';
-        }
+        if (emptyMessage) emptyMessage.style.display = hasVisible ? 'none' : 'flex';
     }
 
     function setupPagination(total) {
@@ -134,15 +177,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const pageCount = Math.ceil(total / ITEMS_PER_PAGE);
         if (pageCount <= 1) return;
 
-        const prevBtn = createPageBtn('Trước', currentPage - 1, currentPage === 1);
-        paginationContainer.appendChild(prevBtn);
-
+        paginationContainer.appendChild(createPageBtn('Trước', currentPage - 1, currentPage === 1));
         for (let i = 1; i <= pageCount; i++) {
             paginationContainer.appendChild(createPageBtn(i, i, false, i === currentPage));
         }
-
-        const nextBtn = createPageBtn('Sau', currentPage + 1, currentPage === pageCount);
-        paginationContainer.appendChild(nextBtn);
+        paginationContainer.appendChild(createPageBtn('Sau', currentPage + 1, currentPage === pageCount));
     }
 
     function createPageBtn(text, page, disabled, active = false) {
@@ -164,16 +203,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return btn;
     }
 
-    // =======================================================
-    // IV. XỬ LÝ MODAL (XEM CHI TIẾT & LIÊN KẾT)
-    // =======================================================
+    // --- 3. XEM CHI TIẾT ---
 
-    // Xem chi tiết ảnh
     allCards.forEach(card => {
         card.addEventListener('click', (e) => {
             if (e.target.closest('.unauthorized-overlay') || e.target.closest('.download-btn')) return;
             if (!isLoggedIn) {
-                openModal('login-modal');
+                window.openModal('login-modal');
                 return;
             }
 
@@ -187,51 +223,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const sourceLink = card.querySelector('a')?.href;
             dlBtn.onclick = () => { if(sourceLink) window.open(sourceLink, '_blank'); };
 
-            openModal('image-detail-modal');
+            window.openModal('image-detail-modal');
         });
     });
 
-    // Mở Modal chung
-    function openModal(id) {
-        const modal = document.getElementById(id);
-        if (modal) {
-            modal.classList.remove('hidden');
-            modal.classList.add('visible');
-            document.body.style.overflow = 'hidden';
-        }
-    }
-
-    // Đóng Modal chung (Global)
-    window.closeAllModals = function() {
-        document.querySelectorAll('.modal-overlay').forEach(m => {
-            m.classList.add('hidden');
-            m.classList.remove('visible');
-        });
-        document.body.style.overflow = '';
-    }
-
-    // Gán sự kiện cho các nút đóng trong HTML
-    document.querySelectorAll('.modal-close-btn').forEach(btn => {
-        btn.onclick = closeAllModals;
-    });
-
-    // Handle Click Overlay Đăng nhập
-    window.handleUnauthorizedClick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        openModal('login-modal');
-    };
-
-    // =======================================================
-    // V. SỰ KIỆN TAB & KHỞI TẠO
-    // =======================================================
+    // --- 4. TAB EVENTS ---
 
     categoryTabs.forEach(tab => {
         tab.addEventListener('click', () => {
             categoryTabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
             currentCat = tab.dataset.cat.toLowerCase();
-            currentSubcat = null; // Reset sub khi đổi main cat
+            currentSubcat = null;
             filterCards();
         });
     });
@@ -245,7 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Chạy khởi tạo
+    // Khởi tạo ban đầu
     checkAuth();
 });
-
