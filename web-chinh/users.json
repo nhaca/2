@@ -1,25 +1,22 @@
 [
   {
     "username": "changhoangtu",
-    "password": "changhoangtu25@"
+    "password": "changhoangtu25@",
     "allowed_ids": "all"
   },
   {
     "username": "nguyennhat",
-    "password": "nguyenanimate"
+    "password": "nguyenanimate",
     "allowed_ids": "all"
   },
   {
     "username": "adminmhm",
-    "password": "machacminh"
+    "password": "machacminh",
     "allowed_ids": "all"
   },
   {
     "username": "vule",
-    "password": "vule@web"
-    "allowed_ids": "123"
+    "password": "vule@web",
+    "allowed_ids": ["123"]
   }
 ]
-
-
-
