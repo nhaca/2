@@ -5,6 +5,11 @@
     "allowed_ids": "all"
   },
   {
+    "username": "test",
+    "password": "test@web",
+    "allowed_ids": "all"
+  },
+  {
     "username": "nguyennhat",
     "password": "nguyenanimate",
     "allowed_ids": "all"
@@ -20,3 +25,4 @@
     "allowed_ids": ["123"]
   }
 ]
+
