@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 # ================== CONFIG ==================
 # Secret key dùng để mã hóa session (giữ đăng nhập)
-app.secret_key = os.environ.get("SECRET_KEY", "sk-gttURQqGrEIovSGrsDfkD9Hw8H5REP3MQwQjPWGfZUqzo7vH")
+app.secret_key = os.environ.get("sk-gttURQqGrEIovSGrsDfkD9Hw8H5REP3MQwQjPWGfZUqzo7vH")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 USERS_FILE = os.path.join(BASE_DIR, "users.json")
@@ -166,3 +166,4 @@ def download_file(res_id):
 if __name__ == "__main__":
     # Host 0.0.0.0 để có thể truy cập từ mạng nội bộ nếu cần
     app.run(debug=True, host='0.0.0.0', port=5000)
+
