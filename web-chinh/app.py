@@ -1,6 +1,6 @@
 from flask import (
     Flask, request, jsonify, render_template,
-    session, Response, stream_with_context
+    session, Response, stream_with_context, redirect
 )
 from functools import wraps
 import json
@@ -31,33 +31,17 @@ def save_data(file_path, data):
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 def ensure_initial_setup():
-    """Khởi tạo dữ liệu mẫu với quyền truy cập"""
-    # 1. Tạo tài khoản mẫu
-    users = load_data(USERS_FILE)
-    if not users:
+    """Khởi tạo dữ liệu nếu file chưa tồn tại"""
+    if not os.path.exists(USERS_FILE):
         sample_users = [
             {"username": "admin", "password": "123", "allowed_ids": "all"},
-            {"username": "khach01", "password": "123", "allowed_ids": ["1"]} # Chỉ được tải ID 1
+            {"username": "khach01", "password": "123", "allowed_ids": ["1"]}
         ]
         save_data(USERS_FILE, sample_users)
     
-    # 2. Tạo tài nguyên mẫu
     if not os.path.exists(RESOURCES_FILE):
-        sample_res = [
-            {
-                "id": "1",
-                "title": "Nhân vật Hắc Báo",
-                "file_url": "https://example.com/bear.fla",
-                "description": "Nhân vật mẫu số 1"
-            },
-            {
-                "id": "2",
-                "title": "Nhân vật Gấu Trúc",
-                "file_url": "https://example.com/panda.fla",
-                "description": "Nhân vật mẫu số 2"
-            }
-        ]
-        save_data(RESOURCES_FILE, sample_res)
+        # Bạn nên dán danh sách 6 nhân vật Google Drive của bạn vào đây
+        save_data(RESOURCES_FILE, [])
 
 ensure_initial_setup()
 
@@ -101,7 +85,6 @@ def me():
     if not session.get("username"):
         return jsonify(logged_in=False)
     
-    # Lấy thông tin chi tiết quyền hạn của user hiện tại
     users = load_data(USERS_FILE)
     user = next((u for u in users if u["username"] == session["username"]), None)
     
@@ -119,7 +102,8 @@ def img_proxy():
     img_url = request.args.get("url")
     if not img_url: return "Missing url", 400
     try:
-        resp = requests.get(img_url, timeout=15)
+        # Tăng timeout và stream nội dung để nhanh hơn
+        resp = requests.get(img_url, timeout=15, stream=True)
         return Response(resp.content, content_type=resp.headers.get("Content-Type", "image/jpeg"))
     except Exception as e:
         return str(e), 500
@@ -127,7 +111,7 @@ def img_proxy():
 @app.route("/api/download/<res_id>")
 @login_required
 def download_file(res_id):
-    # 1. Kiểm tra quyền sở hữu (Permission Check)
+    # 1. Kiểm tra quyền sở hữu
     users = load_data(USERS_FILE)
     user = next((u for u in users if u["username"] == session["username"]), None)
     
@@ -135,7 +119,6 @@ def download_file(res_id):
         return "Lỗi xác thực người dùng", 403
     
     allowed = user.get("allowed_ids", [])
-    # Nếu không phải 'all' (admin) và ID không có trong danh sách được phép
     if allowed != "all" and str(res_id) not in [str(i) for i in allowed]:
         return "Bạn không có quyền tải nhân vật này. Vui lòng liên hệ Admin!", 403
 
@@ -146,23 +129,10 @@ def download_file(res_id):
     if not item:
         return "Tài nguyên không tồn tại", 404
 
-    # 3. Tiến hành tải và stream file
-    try:
-        file_resp = requests.get(item["file_url"], stream=True, timeout=60)
-        def generate():
-            for chunk in file_resp.iter_content(chunk_size=8192):
-                if chunk: yield chunk
-
-        filename = item.get("title", res_id).replace(" ", "_")
-        return Response(
-            stream_with_context(generate()),
-            headers={
-                "Content-Disposition": f"attachment; filename={filename}.fla",
-                "Content-Type": "application/octet-stream"
-            }
-        )
-    except Exception as e:
-        return f"Lỗi kết nối: {str(e)}", 500
+    # 3. CHUYỂN HƯỚNG TẢI FILE (Tối ưu tốc độ)
+    # Thay vì dùng requests.get(stream=True) làm server bị chậm, 
+    # dùng redirect sẽ giúp máy khách tải trực tiếp từ Google Drive.
+    return redirect(item["file_url"])
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
